@@ -15,6 +15,7 @@ export const FRAGMENT_CREDIT_CARD = gql`
     id
     type
     number
+    color
   }
 `;
 

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { withOpacity } from "utils";
+import { withOpacity } from "ui";
 
 export const Card = styled.div`
   border-radius: 0.75rem;
@@ -19,7 +19,6 @@ export const Strip = styled.div`
   padding: 0.5rem 1rem;
   margin-top: 1.5rem;
   margin-bottom: 2rem;
-  background-color: ${(props) => props.theme.colors.subscriptionCard.strip.background};
   color: ${(props) => props.theme.colors.subscriptionCard.strip.color};
 `;
 
@@ -32,7 +31,9 @@ export const CreditCard = styled.div`
   gap: 0.5rem;
   padding: 0.25rem 0.5rem;
   border-radius: 0.25rem;
-  background-color: ${withOpacity(20, "#FFFFFF")};
+  color: ${(props) => (props.cardColor ? props.cardColor : props.theme.colors.subscriptionCard.creditCard.color)};
+  background-color: ${(props) =>
+    props.cardColor ? props.cardColor : props.theme.colors.subscriptionCard.creditCard.defaultBackground};
 `;
 
 export const CreditCardType = styled.div`
@@ -42,7 +43,8 @@ export const CreditCardType = styled.div`
 export const CreditCardNumber = styled.div`
   padding: 0rem 0.25rem;
   border-radius: 0.25rem;
-  background-color: ${withOpacity(20, "#FFFFFF")};
+  background-color: ${(props) =>
+    withOpacity(10, props.theme.colors.subscriptionCard.creditCard.defaultNumberBackground)};
 `;
 
 export const Cost = styled.div`

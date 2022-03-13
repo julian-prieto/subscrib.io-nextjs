@@ -11,14 +11,14 @@ import {
   CostFrequency,
   Tags,
 } from "./styled";
-import { Tag } from "ui";
+import { Tag } from "components";
 
 const SubscriptionCard = ({ title, creditCard, price, currency, frequency, tags }) => {
   return (
     <Card>
       <Strip>
         <Title>{title}</Title>
-        <CreditCard>
+        <CreditCard cardColor={creditCard.color}>
           <CreditCardType>{getCreditCardType(creditCard.type)}</CreditCardType>
           <CreditCardNumber>{creditCard.number}</CreditCardNumber>
         </CreditCard>

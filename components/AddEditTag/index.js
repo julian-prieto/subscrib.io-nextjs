@@ -4,7 +4,8 @@ import { useForm } from "react-hook-form";
 import { GET_TAGS } from "graphql/queries";
 import { CREATE_TAG } from "graphql/mutations";
 import { useAuth } from "hooks";
-import { Button, Input, Tag } from "ui";
+import { Button, Input } from "ui";
+import { Tag } from "components";
 import { Actions, Card, Form, H1, H2, TagList } from "./styled";
 
 const AddEditTag = () => {

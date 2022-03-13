@@ -1,6 +1,5 @@
 import Head from "next/head";
-import { SubscriptionList } from "components";
-import AddEditTag from "components/AddEditTag";
+import { SubscriptionList, AddEditTag, AddEditCreditCard } from "components";
 
 const Subscrib = () => {
   return (
@@ -11,7 +10,8 @@ const Subscrib = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <SubscriptionList />
-      <AddEditTag />
+      {/* <AddEditTag /> */}
+      <AddEditCreditCard />
     </>
   );
 };

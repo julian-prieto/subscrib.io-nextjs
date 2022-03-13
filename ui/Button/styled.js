@@ -1,6 +1,5 @@
 import styled, { css } from "styled-components";
-import { withOpacity } from "utils";
-import { Icon } from "ui";
+import { withOpacity, Icon } from "ui";
 
 export const StyledButton = styled.button`
   display: flex;
