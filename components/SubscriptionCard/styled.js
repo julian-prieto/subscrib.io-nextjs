@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { withOpacity } from "ui";
+import { withOpacity, getContrastColor } from "ui";
 
 export const Card = styled.div`
   border-radius: 0.75rem;
@@ -14,15 +14,23 @@ export const Card = styled.div`
 
 export const Strip = styled.div`
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 1rem 0.5rem 0;
   margin-top: 1.5rem;
   margin-bottom: 2rem;
-  color: ${(props) => props.theme.colors.subscriptionCard.strip.color};
 `;
 
 export const Title = styled.div`
+  padding: 0.5rem 1rem 0.5rem;
+
+  border-top-right-radius: 0.25rem;
+  border-bottom-right-radius: 0.25rem;
+  background-color: ${(props) => props.theme.colors.subscriptionCard.title.background};
+
+  color: ${(props) => props.theme.colors.subscriptionCard.title.color};
+  font-size: 1.5rem;
   font-weight: 700;
 `;
 
@@ -31,7 +39,8 @@ export const CreditCard = styled.div`
   gap: 0.5rem;
   padding: 0.25rem 0.5rem;
   border-radius: 0.25rem;
-  color: ${(props) => (props.cardColor ? props.cardColor : props.theme.colors.subscriptionCard.creditCard.color)};
+  color: ${(props) =>
+    props.cardColor ? getContrastColor(props.cardColor) : props.theme.colors.subscriptionCard.creditCard.color};
   background-color: ${(props) =>
     props.cardColor ? props.cardColor : props.theme.colors.subscriptionCard.creditCard.defaultBackground};
 `;
@@ -43,8 +52,7 @@ export const CreditCardType = styled.div`
 export const CreditCardNumber = styled.div`
   padding: 0rem 0.25rem;
   border-radius: 0.25rem;
-  background-color: ${(props) =>
-    withOpacity(10, props.theme.colors.subscriptionCard.creditCard.defaultNumberBackground)};
+  background-color: ${(props) => withOpacity(10, getContrastColor(props.cardColor))};
 `;
 
 export const Cost = styled.div`

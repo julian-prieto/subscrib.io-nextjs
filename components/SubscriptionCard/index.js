@@ -12,15 +12,17 @@ import {
   Tags,
 } from "./styled";
 import { Tag } from "components";
+import { getContrastColor } from "ui";
 
 const SubscriptionCard = ({ title, creditCard, price, currency, frequency, tags }) => {
+  console.log("Contrast:", getContrastColor(creditCard.color));
   return (
     <Card>
       <Strip>
         <Title>{title}</Title>
         <CreditCard cardColor={creditCard.color}>
           <CreditCardType>{getCreditCardType(creditCard.type)}</CreditCardType>
-          <CreditCardNumber>{creditCard.number}</CreditCardNumber>
+          <CreditCardNumber cardColor={creditCard.color}>{creditCard.number}</CreditCardNumber>
         </CreditCard>
       </Strip>
       <Cost>

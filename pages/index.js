@@ -10,8 +10,8 @@ const Subscrib = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <SubscriptionList />
-      {/* <AddEditTag /> */}
       <AddEditCreditCard />
+      <AddEditTag />
     </>
   );
 };
