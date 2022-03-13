@@ -26,12 +26,14 @@ export const FRAGMENT_TAG = gql`
 `;
 
 export const FRAGMENT_SUBSCRIPTION = gql`
+  ${FRAGMENT_CREDIT_CARD}
+  ${FRAGMENT_TAG}
   fragment SubscriptionParts on Subscription {
     id
     title
     price
     currency
-    frecuency
+    frequency
     image
     creditCard {
       ...CreditCardParts
@@ -39,13 +41,5 @@ export const FRAGMENT_SUBSCRIPTION = gql`
     tags {
       ...TagParts
     }
-  }
-`;
-
-export const FRAGMENT_GENERIC_RESPONSE = gql`
-  fragment GenericResponseParts on GenericResponse {
-    action
-    success
-    message
   }
 `;

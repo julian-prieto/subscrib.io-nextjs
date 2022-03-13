@@ -17,7 +17,7 @@ const refreshTokenSetup = (res) => {
 };
 
 const useAuth = ({ onSuccess, onFailure, onLogoutSuccess } = {}) => {
-  const { user, setUserOnAuthChange } = useContext(AppContext);
+  const { user, setUserOnAuthChange, theme } = useContext(AppContext);
 
   const handleSuccess = async (res) => {
     const token = res.tokenId;
@@ -29,7 +29,6 @@ const useAuth = ({ onSuccess, onFailure, onLogoutSuccess } = {}) => {
     setUserToken(token);
     refreshTokenSetup(res);
 
-    console.log({ token });
     if (onSuccess) {
       onSuccess(res);
     }
@@ -56,6 +55,7 @@ const useAuth = ({ onSuccess, onFailure, onLogoutSuccess } = {}) => {
       onSuccess={handleSuccess}
       onFailure={handleFailure}
       isSignedIn={true}
+      theme={theme}
     />
   );
 
@@ -64,6 +64,7 @@ const useAuth = ({ onSuccess, onFailure, onLogoutSuccess } = {}) => {
       clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}
       buttonText="Logout"
       onLogoutSuccess={handleLogoutSuccess}
+      theme={theme}
     />
   );
 

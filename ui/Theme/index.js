@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { darken, lighten } from "polished";
+import { withOpacity } from "utils";
 
 export const sizes = {
   sm: "600px",
@@ -13,19 +14,6 @@ export const devices = {
   md: `(min-width: ${sizes.md})`,
   lg: `(min-width: ${sizes.lg})`,
   xl: `(min-width: ${sizes.xl})`,
-};
-
-const withOpacity = (percent, color) => {
-  if (percent >= 0 && percent <= 100) {
-    let hex = Math.ceil(Number((percent / 100) * 255))
-      .toString(16)
-      .toUpperCase();
-    if (hex.length === 1) {
-      hex = `0${hex}`;
-    }
-    return color + hex;
-  }
-  return `${color}FF`;
 };
 
 export const colors = {
@@ -42,6 +30,7 @@ export const colors = {
 
 export const lightTheme = {
   colors: {
+    ...colors,
     header: {
       background: colors.primary,
       color: colors.lighter,
@@ -97,11 +86,25 @@ export const lightTheme = {
       background: colors.lighter,
       color: colors.darker,
     },
+    tag: {
+      background: withOpacity(10, colors.dark),
+      color: colors.dark,
+    },
+
+    // Specific components
+    subscriptionCard: {
+      background: colors.lighter,
+      strip: {
+        background: colors.primary,
+        color: colors.lighter,
+      },
+    },
   },
 };
 
 export const darkTheme = {
   colors: {
+    ...colors,
     header: {
       background: colors.darker,
       color: colors.lighter,
@@ -157,6 +160,19 @@ export const darkTheme = {
       background: colors.dark,
       color: colors.light,
     },
+    tag: {
+      background: withOpacity(10, colors.light),
+      color: colors.light,
+    },
+
+    // Specific components
+    subscriptionCard: {
+      background: colors.darker,
+      strip: {
+        background: colors.primary,
+        color: colors.lighter,
+      },
+    },
   },
 };
 
@@ -186,10 +202,8 @@ const StyledFlex = styled.div`
   flex-direction: ${(props) => props.direction};
   justify-content: ${(props) => props.justify};
   align-items: ${(props) => props.items};
-  padding: ${(props) =>
-    typeof props.p === "number" ? `${props.p}rem` : props.p?.map((p) => `${p}rem`).join(" ")};
-  margin: ${(props) =>
-    typeof props.m === "number" ? `${props.m}rem` : props.m?.map((m) => `${m}rem`).join(" ")};
+  padding: ${(props) => (typeof props.p === "number" ? `${props.p}rem` : props.p?.map((p) => `${p}rem`).join(" "))};
+  margin: ${(props) => (typeof props.m === "number" ? `${props.m}rem` : props.m?.map((m) => `${m}rem`).join(" "))};
 
   & + & {
     margin-top: 1rem;
@@ -209,9 +223,7 @@ export const Svg = styled(Icon)`
 `;
 
 export const Card = styled.div`
-  padding: 2rem 1rem;
-  border-radius: 1rem;
+  border-radius: 0.25rem;
   background-color: ${(props) => props.theme.colors.card.background};
   color: ${(props) => props.theme.colors.card.color};
-  /* box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.1); */
 `;

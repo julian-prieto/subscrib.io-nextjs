@@ -1,53 +1,10 @@
 import { useEffect, useState } from "react";
-import styled from "styled-components";
+import { Wrapper, Header, Title, IconWrapper, ContentWrapper, Content } from "./styled";
 import { Svg } from "ui";
-
-const Wrapper = styled.div`
-  border-radius: 0.25rem;
-  background-color: ${(props) => props.theme.colors.collapse.background};
-  color: ${(props) => props.theme.colors.collapse.color};
-`;
-
-const Header = styled.div`
-  display: flex;
-  padding: 0.75rem 1rem;
-  cursor: pointer;
-`;
-
-const Title = styled.div`
-  flex: 1;
-`;
-
-const IconWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transform: ${(props) => (props.isOpen ? "rotate(-90deg)" : "rotate(0deg)")};
-
-  transition: transform 0.2s ease-out;
-`;
-
-const ContentWrapper = styled.div`
-  max-height: ${(props) => (props.isOpen ? "100vh" : "0px")};
-  overflow: hidden;
-  transition: max-height 0.3s ease-in-out;
-`;
-
-const Content = styled.div`
-  padding: 0.75rem 1rem;
-  border-top: 1px solid ${(props) => props.theme.colors.collapse.divider};
-`;
 
 const renderDefaultIcon = () => {
   return (
-    <Svg
-      role="presentation"
-      focusable="false"
-      width="18"
-      height="18"
-      fill="none"
-      viewBox="0 0 24 24"
-    >
+    <Svg role="presentation" focusable="false" width="18" height="18" fill="none" viewBox="0 0 24 24">
       <path d="M15.5 19l-7-7 7-7" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
     </Svg>
   );

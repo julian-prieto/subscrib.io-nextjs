@@ -1,67 +1,4 @@
-import styled, { css } from "styled-components";
-import { withOpacity } from "utils";
-import { Icon } from "ui";
-
-const StyledButton = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  position: relative;
-
-  border: none;
-  padding: 0.5rem 1rem;
-
-  border-radius: 0.25rem;
-
-  cursor: pointer;
-
-  background-color: ${(props) => props.theme.colors.button[props.color].background};
-  color: ${(props) => props.theme.colors.button[props.color].color};
-
-  transition: all 0.3s ease-out;
-
-  &:hover {
-    background-color: ${(props) => props.theme.colors.button[props.color].backgroundHover};
-  }
-  &:disabled {
-    background-color: ${(props) => props.theme.colors.button[props.color].backgroundDisabled};
-  }
-
-  ${(props) =>
-    props.variant === "outlined" &&
-    css`
-      border: 1px solid ${props.theme.colors.button[props.color].background};
-      color: ${props.theme.colors.button[props.color].background};
-      background-color: transparent;
-
-      &:hover {
-        background-color: ${(props) =>
-          withOpacity(20, props.theme.colors.button[props.color].backgroundHover)};
-      }
-
-      &:disabled {
-        background-color: transparent;
-        border: 1px solid ${props.theme.colors.button[props.color].backgroundDisabled};
-        color: ${props.theme.colors.button[props.color].backgroundDisabled};
-      }
-    `}
-`;
-
-const ButtonContent = styled.div`
-  opacity: ${(props) => (props.loading ? "0" : "1")}; ;
-`;
-
-const IconWrapper = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-`;
-
-const Svg = styled(Icon)`
-  fill: ${(props) => props.theme.colors.button[props.color].color};
-`;
+import { StyledButton, ButtonContent, IconWrapper, Svg } from "./styled";
 
 const renderLoadingIcon = (color) => {
   return (
@@ -112,17 +49,11 @@ const renderLoadingIcon = (color) => {
     </Svg>
   );
 };
-const Button = ({
-  children,
-  color = "primary",
-  variant = "contained",
-  loading = false,
-  ...props
-}) => {
+const Button = ({ children, color = "primary", variant = "contained", isLoading = false, ...props }) => {
   return (
     <StyledButton color={color} variant={variant} {...props}>
-      <ButtonContent loading={loading ? loading : undefined}>{children}</ButtonContent>
-      {loading && <IconWrapper>{renderLoadingIcon(color)}</IconWrapper>}
+      <ButtonContent isLoading={isLoading}>{children}</ButtonContent>
+      {isLoading && <IconWrapper>{renderLoadingIcon(color)}</IconWrapper>}
     </StyledButton>
   );
 };

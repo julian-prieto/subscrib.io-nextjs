@@ -3,7 +3,7 @@ import { useStateWithStorage } from "hooks";
 import { AppContext } from "context/AppContext";
 
 export const AppProvider = ({ children }) => {
-  const [storageTheme, setStorageTheme] = useStateWithStorage("theme", "light");
+  const [storageTheme, setStorageTheme] = useStateWithStorage("theme", "dark");
   const [theme, setTheme] = useState("light");
   const [user, setUser] = useState(null);
 
