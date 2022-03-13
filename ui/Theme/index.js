@@ -132,7 +132,7 @@ export const lightTheme = {
     subscriptionCard: {
       background: colors.lighter,
       title: {
-        background: colors.primary,
+        background: colors.darker,
         color: colors.lighter,
       },
       creditCard: {
@@ -146,7 +146,7 @@ export const lightTheme = {
       color: colors.dark,
     },
     creditCard: {
-      background: colors.lighter,
+      background: colors.light,
       color: colors.dark,
     },
   },
@@ -215,8 +215,8 @@ export const darkTheme = {
     subscriptionCard: {
       background: colors.darker,
       title: {
-        background: colors.primary,
-        color: colors.lighter,
+        background: colors.lighter,
+        color: colors.dark,
       },
       creditCard: {
         defaultBackground: colors.lighter,

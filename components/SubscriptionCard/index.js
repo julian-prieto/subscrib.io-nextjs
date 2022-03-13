@@ -12,10 +12,8 @@ import {
   Tags,
 } from "./styled";
 import { Tag } from "components";
-import { getContrastColor } from "ui";
 
 const SubscriptionCard = ({ title, creditCard, price, currency, frequency, tags }) => {
-  console.log("Contrast:", getContrastColor(creditCard.color));
   return (
     <Card>
       <Strip>

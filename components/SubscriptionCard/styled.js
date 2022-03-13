@@ -52,7 +52,13 @@ export const CreditCardType = styled.div`
 export const CreditCardNumber = styled.div`
   padding: 0rem 0.25rem;
   border-radius: 0.25rem;
-  background-color: ${(props) => withOpacity(10, getContrastColor(props.cardColor))};
+  background-color: ${(props) =>
+    withOpacity(
+      10,
+      props.cardColor
+        ? getContrastColor(props.cardColor)
+        : props.theme.colors.subscriptionCard.creditCard.defaultNumberBackground
+    )};
 `;
 
 export const Cost = styled.div`

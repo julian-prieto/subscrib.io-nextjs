@@ -1,5 +1,5 @@
-import styled, { css } from "styled-components";
-import { withOpacity } from "ui";
+import styled from "styled-components";
+import { getContrastColor } from "ui";
 
 export const Wrapper = styled.div`
   display: flex;
@@ -30,5 +30,6 @@ export const CardNumber = styled.div`
 
   font-weight: 700;
 
-  background-color: ${(props) => withOpacity(100, props.theme.colors.option)};
+  background-color: ${(props) => (props.color ? props.color : props.theme.colors.option)};
+  color: ${(props) => (props.color ? getContrastColor(props.color) : props.theme.colors.lighter)};
 `;
