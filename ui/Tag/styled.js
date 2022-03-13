@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { withOpacity } from "utils";
+import { Input } from "ui";
 
 export const Wrapper = styled.div`
   display: flex;
@@ -74,4 +74,14 @@ export const TagIcon = styled.div`
         animation: icon-spin 2s infinite linear;
       }
     `}
+`;
+
+export const TagInput = styled(Input)`
+  padding: 0 0.25rem;
+  margin: 0 0.25rem;
+  font-size: 0.75rem;
+
+  &:focus {
+    outline: ${(props) => (props.error ? "1px solid red" : "none")};
+  }
 `;
