@@ -41,5 +41,6 @@ export const Actions = styled.div`
 export const Grid = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  align-items: start;
   gap: 1rem;
 `;

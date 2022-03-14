@@ -7,15 +7,22 @@ export const Wrapper = styled.div`
   border: none;
   border-radius: 0.25rem;
 
+  height: 4.5rem;
+
   background-color: ${(props) => props.theme.colors.creditCard.background};
   color: ${(props) => props.theme.colors.creditCard.color};
 `;
 
 export const CardType = styled.div`
   flex: 1;
-  margin: 1rem 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.25rem;
+  margin: ${(props) => (props.isEditing ? "0" : "1rem 0")};
   padding: 0.5rem 1rem;
 
+  font-size: 1.25rem;
   font-weight: 700;
 `;
 

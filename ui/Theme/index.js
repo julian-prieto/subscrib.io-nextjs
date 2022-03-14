@@ -148,7 +148,7 @@ export const lightTheme = {
     },
     creditCard: {
       background: colors.light,
-      editBackground: withOpacity(50, colors.dark),
+      editBackground: withOpacity(5, colors.dark),
       color: colors.dark,
     },
   },

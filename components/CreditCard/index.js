@@ -5,6 +5,7 @@ import { FaTrash, FaPen, FaSpinner, FaCheck } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 import { DELETE_CREDIT_CARD_BY_ID, UPDATE_CREDIT_CARD_BY_ID } from "graphql/mutations";
 import { Wrapper, CardType, CardNumber, CardActions, CardIcon, CardNumberInput, CardTypeInput } from "./styled";
+import { ColorSelector } from "components";
 
 const CreditCard = ({ creditCard, allowDestroy, allowEdit }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -19,12 +20,14 @@ const CreditCard = ({ creditCard, allowDestroy, allowEdit }) => {
     reset,
     setFocus,
     getValues,
+    setValue,
+    watch,
     formState: { errors },
   } = useForm();
 
   const handleEditCreditCard = (form) => {
     editCreditCard({
-      variables: { id: creditCard.id, type: form.type, number: form.number },
+      variables: { id: creditCard.id, type: form.type, number: form.number, color: form.color },
       refetchQueries: ["GetCreditCards"],
     });
   };
@@ -60,7 +63,7 @@ const CreditCard = ({ creditCard, allowDestroy, allowEdit }) => {
     <Wrapper>
       {isEditing ? (
         <>
-          <CardNumber color={creditCard.color}>
+          <CardNumber color={watch("color") || creditCard.color}>
             <CardNumberInput
               onKeyPress={handleUserKeyPress}
               error={errors.number}
@@ -70,7 +73,7 @@ const CreditCard = ({ creditCard, allowDestroy, allowEdit }) => {
               })}
             />
           </CardNumber>
-          <CardType>
+          <CardType isEditing={isEditing}>
             <CardTypeInput
               onKeyPress={handleUserKeyPress}
               error={errors.type}
@@ -82,6 +85,7 @@ const CreditCard = ({ creditCard, allowDestroy, allowEdit }) => {
                 },
               })}
             />
+            <ColorSelector defaultColor={creditCard.color} onChange={(v) => setValue("color", v)} small />
           </CardType>
           <CardActions>
             <CardIcon

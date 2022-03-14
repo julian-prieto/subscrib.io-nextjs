@@ -11,18 +11,24 @@ const ALLOWED_COLORS = {
   Purple: "#a855f7",
 };
 
-const ColorSelector = ({ onChange }) => {
-  const [selected, setSelected] = useState(null);
+const ColorSelector = ({ defaultColor, onChange, small }) => {
+  const [selected, setSelected] = useState(defaultColor);
 
   const handleSelect = (key) => {
-    setSelected(key);
+    setSelected(ALLOWED_COLORS[key]);
     onChange(ALLOWED_COLORS[key]);
   };
 
   return (
     <Wrapper>
       {Object.keys(ALLOWED_COLORS).map((key) => (
-        <Circle key={key} color={ALLOWED_COLORS[key]} selected={selected === key} onClick={() => handleSelect(key)} />
+        <Circle
+          key={key}
+          color={ALLOWED_COLORS[key]}
+          selected={selected === ALLOWED_COLORS[key]}
+          onClick={() => handleSelect(key)}
+          small={small}
+        />
       ))}
     </Wrapper>
   );

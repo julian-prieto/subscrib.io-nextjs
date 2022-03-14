@@ -40,12 +40,6 @@ const AddEditCreditCard = () => {
     }
   }, [dataCreateMutation, loadingCreateMutation, calledCreateMutation, reset]);
 
-  const previewCard = {
-    type: getValues("type"),
-    number: getValues("number"),
-    color: watch("color"),
-  };
-
   return (
     <Card>
       <H1>CreditCards</H1>
