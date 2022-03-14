@@ -69,7 +69,7 @@ const AddEditCreditCard = () => {
         <ColorSelector onChange={(v) => setValue("color", v)} />
         <Actions>
           <Button type="submit" isLoading={loadingCreateMutation} disabled={loadingCreateMutation || formHasErrors}>
-            ADD TAG
+            ADD CREDIT CARD
           </Button>
         </Actions>
       </Form>
