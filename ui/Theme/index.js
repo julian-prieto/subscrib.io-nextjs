@@ -70,6 +70,7 @@ export const colors = {
 };
 
 export const lightTheme = {
+  devices,
   colors: {
     ...colors,
     header: {
@@ -154,6 +155,7 @@ export const lightTheme = {
 };
 
 export const darkTheme = {
+  devices,
   colors: {
     ...colors,
     header: {

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
-import { CreditCard } from "components";
+import { CreditCard, ColorSelector } from "components";
 import { CREATE_CREDIT_CARD } from "graphql/mutations";
 import { GET_CREDIT_CARDS } from "graphql/queries";
 import { useAuth } from "hooks";
@@ -20,6 +20,8 @@ const AddEditCreditCard = () => {
     handleSubmit,
     watch,
     reset,
+    setValue,
+    getValues,
     formState: { errors },
   } = useForm();
 
@@ -37,6 +39,12 @@ const AddEditCreditCard = () => {
       reset();
     }
   }, [dataCreateMutation, loadingCreateMutation, calledCreateMutation, reset]);
+
+  const previewCard = {
+    type: getValues("type"),
+    number: getValues("number"),
+    color: watch("color"),
+  };
 
   return (
     <Card>
@@ -64,15 +72,7 @@ const AddEditCreditCard = () => {
           error={errors.number && "Error!"}
           disabled={loadingCreateMutation}
         />
-
-        <Input
-          hasValue={!!watch("color")}
-          label="Color (Hex #FFFFFF)"
-          {...register("color", { required: false, minLength: 7, maxLength: 7 })}
-          error={errors.color && "Error!"}
-          disabled={loadingCreateMutation}
-        />
-
+        <ColorSelector onChange={(v) => setValue("color", v)} />
         <Actions>
           <Button type="submit" isLoading={loadingCreateMutation} disabled={loadingCreateMutation || formHasErrors}>
             ADD TAG

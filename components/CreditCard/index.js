@@ -39,7 +39,6 @@ const CreditCard = ({ creditCard, allowDestroy, allowEdit }) => {
   };
 
   const handleUserKeyPress = (e) => {
-    console.log({ key: e.key });
     if (e.key === "Enter" && !e.shiftKey) {
       handleSubmit(handleEditCreditCard)();
     }
