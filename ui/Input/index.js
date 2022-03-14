@@ -1,7 +1,7 @@
 import { forwardRef } from "react";
-import { Field, StyledInput, StyledLabel } from "./styled";
+import { Field, StyledInput, StyledLabel, ErrorMessage } from "./styled";
 
-const Input = ({ hasValue, value, onChange, name, label, placeholder, type, ...props }, ref) => (
+const Input = ({ hasValue, value, onChange, name, label, placeholder, type, error, ...props }, ref) => (
   <Field>
     <StyledInput
       ref={ref}
@@ -17,6 +17,7 @@ const Input = ({ hasValue, value, onChange, name, label, placeholder, type, ...p
         {label}
       </StyledLabel>
     )}
+    {error && <ErrorMessage>{error}</ErrorMessage>}
   </Field>
 );
 

@@ -147,6 +147,7 @@ export const lightTheme = {
     },
     creditCard: {
       background: colors.light,
+      editBackground: withOpacity(50, colors.dark),
       color: colors.dark,
     },
   },
@@ -230,6 +231,7 @@ export const darkTheme = {
     },
     creditCard: {
       background: colors.darker,
+      editBackground: withOpacity(10, colors.light),
       color: colors.light,
     },
   },

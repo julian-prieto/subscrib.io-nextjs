@@ -18,10 +18,12 @@ const SubscriptionCard = ({ title, creditCard, price, currency, frequency, tags 
     <Card>
       <Strip>
         <Title>{title}</Title>
-        <CreditCard cardColor={creditCard.color}>
-          <CreditCardType>{getCreditCardType(creditCard.type)}</CreditCardType>
-          <CreditCardNumber cardColor={creditCard.color}>{creditCard.number}</CreditCardNumber>
-        </CreditCard>
+        {creditCard && (
+          <CreditCard cardColor={creditCard.color}>
+            {creditCard.type && <CreditCardType>{getCreditCardType(creditCard.type)}</CreditCardType>}
+            {creditCard.number && <CreditCardNumber cardColor={creditCard.color}>{creditCard.number}</CreditCardNumber>}
+          </CreditCard>
+        )}
       </Strip>
       <Cost>
         <CostPrice>

@@ -1,7 +1,10 @@
 import Head from "next/head";
 import { SubscriptionList, AddEditTag, AddEditCreditCard } from "components";
+import { useAuth } from "hooks";
 
 const Subscrib = () => {
+  const { user } = useAuth();
+  console.log("user:", user);
   return (
     <>
       <Head>

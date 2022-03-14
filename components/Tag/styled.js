@@ -23,6 +23,7 @@ export const TagName = styled.div`
 
   font-size: 0.75rem;
 `;
+
 export const TagIcon = styled.div`
   display: flex;
   justify-content: center;

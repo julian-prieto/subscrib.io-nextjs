@@ -25,7 +25,11 @@ export const TagList = styled.div`
   flex-wrap: wrap;
 `;
 
-export const Form = styled.form``;
+export const Form = styled.form`
+  & > * + * {
+    margin-top: 1rem;
+  }
+`;
 
 export const Actions = styled.div`
   display: flex;

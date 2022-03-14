@@ -47,3 +47,8 @@ export const StyledLabel = styled.label`
     transform: translate(0rem, -0.5rem);
   }
 `;
+
+export const ErrorMessage = styled.div`
+  color: ${(props) => props.theme.colors.alert};
+  font-weight: 500;
+`;

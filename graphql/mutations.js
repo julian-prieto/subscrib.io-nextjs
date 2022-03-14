@@ -67,7 +67,7 @@ export const DELETE_SUBSCRIPTION_BY_ID = gql`
 export const CREATE_CREDIT_CARD = gql`
   ${FRAGMENT_CREDIT_CARD}
 
-  mutation CreateCreditCard($type: String!, $number: Number, $color: String) {
+  mutation CreateCreditCard($type: String!, $number: String, $color: String) {
     createCreditCard(type: $type, number: $number, color: $color) {
       ...CreditCardParts
     }
@@ -76,7 +76,7 @@ export const CREATE_CREDIT_CARD = gql`
 
 export const UPDATE_CREDIT_CARD_BY_ID = gql`
   ${FRAGMENT_CREDIT_CARD}
-  mutation UpdateCreditCardById($id: ID!, $type: String!, $number: Number, $color: String) {
+  mutation UpdateCreditCardById($id: ID!, $type: String!, $number: String, $color: String) {
     updateCreditCardById(id: $id, type: $type, number: $number, color: $color) {
       ...CreditCardParts
     }

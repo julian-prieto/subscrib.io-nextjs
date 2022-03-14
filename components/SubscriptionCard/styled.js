@@ -50,6 +50,7 @@ export const CreditCardType = styled.div`
 `;
 
 export const CreditCardNumber = styled.div`
+  font-weight: 700;
   padding: 0rem 0.25rem;
   border-radius: 0.25rem;
   background-color: ${(props) =>
