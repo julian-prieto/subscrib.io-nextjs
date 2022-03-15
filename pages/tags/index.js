@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { AddEditCreditCard } from "components";
+import { AddEditTag } from "components";
 import { useAuth } from "hooks";
 
 const Tags = () => {
@@ -11,7 +11,7 @@ const Tags = () => {
         <title>Subscrib.io - Tags</title>
         <meta name="description" content="Subscrib.io - Manage your tags" />
       </Head>
-      {user ? <AddEditCreditCard /> : "Login to manage your tags"}
+      {user ? <AddEditTag /> : "Login to manage your tags"}
     </>
   );
 };
