@@ -48,7 +48,9 @@ export const CreditCard = styled.div`
   padding: 0.25rem 0.5rem;
   border-radius: 0.25rem;
   color: ${(props) =>
-    props.cardColor ? getContrastColor(props.cardColor) : props.theme.colors.subscriptionCard.creditCard.color};
+    props.cardColor
+      ? getContrastColor(props.cardColor)
+      : props.theme.colors.subscriptionCard.creditCard.color};
   background-color: ${(props) =>
     props.cardColor ? props.cardColor : props.theme.colors.subscriptionCard.creditCard.defaultBackground};
 `;
@@ -95,4 +97,22 @@ export const Tags = styled.div`
   justify-content: flex-end;
   gap: 0.25rem;
   padding: 1rem;
+`;
+
+export const LoadingOverlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 10;
+
+  border-radius: 0.75rem;
+  background: ${(props) => props.theme.colors.subscriptionCard.background};
 `;

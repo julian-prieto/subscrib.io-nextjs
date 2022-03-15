@@ -1,4 +1,4 @@
-const FRECUENCIES = {
+export const FREQUENCIES = {
   DAILY: "day",
   MONTHLY: "month",
   YEARLY: "year",
@@ -10,6 +10,8 @@ const CARD_TYPES = {
   MASTERCARD: "MC",
 };
 
+export const EMPTY_FIELD = "----------";
+
 export const getUserToken = () => localStorage.getItem("token");
 
 export const setUserToken = (token) => localStorage.setItem("token", token);
@@ -17,7 +19,7 @@ export const setUserToken = (token) => localStorage.setItem("token", token);
 export const removeUserToken = () => localStorage.removeItem("token");
 
 export const getFrequency = (frequency) => {
-  if (FRECUENCIES[frequency]) return FRECUENCIES[frequency];
+  if (FREQUENCIES[frequency]) return FREQUENCIES[frequency];
   return frequency;
 };
 
@@ -38,4 +40,14 @@ export const getCreditCardType = (type) => {
     }
   }
   return type.toUpperCase();
+};
+
+export const getDirtyValues = (variables, dirtyFields) => {
+  return Object.keys(dirtyFields).reduce(
+    (acc, current) => ({
+      ...acc,
+      [current]: variables[current] === EMPTY_FIELD ? null : variables[current],
+    }),
+    {}
+  );
 };

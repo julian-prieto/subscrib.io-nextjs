@@ -1,9 +1,11 @@
 export { default as Header } from "./Header";
+export { default as OptionsMenu } from "./OptionsMenu";
+export { default as Modal } from "./Modal";
+export { default as AddEditSubscription } from "./AddEditSubscription";
+export { default as AddEditCreditCard } from "./AddEditCreditCard";
+export { default as AddEditTag } from "./AddEditTag";
 export { default as SubscriptionCard } from "./SubscriptionCard";
 export { default as SubscriptionList } from "./SubscriptionList";
 export { default as Tag } from "./Tag";
-export { default as AddEditTag } from "./AddEditTag";
 export { default as CreditCard } from "./CreditCard";
-export { default as AddEditCreditCard } from "./AddEditCreditCard";
 export { default as ColorSelector } from "./ColorSelector";
-export { default as OptionsMenu } from "./OptionsMenu";

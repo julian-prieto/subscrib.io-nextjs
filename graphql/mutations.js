@@ -6,12 +6,12 @@ export const CREATE_SUBSCRIPTION = gql`
   ${FRAGMENT_SUBSCRIPTION}
   mutation CreateSubscription(
     $title: String!
-    $price: Number!
+    $price: Float!
     $currency: String!
-    $frequency: String!
+    $frequency: Frequency!
     $creditCardId: String
     $tags: [String]
-    $image: [String]
+    $image: String
   ) {
     createSubscription(
       title: $title
@@ -29,15 +29,15 @@ export const CREATE_SUBSCRIPTION = gql`
 
 export const UPDATE_SUBSCRIPTION_BY_ID = gql`
   ${FRAGMENT_SUBSCRIPTION}
-  mutation CreateSubscription(
+  mutation UpdateSubscription(
     $id: ID!
-    $title: String!
-    $price: Number!
-    $currency: String!
-    $frequency: String!
+    $title: String
+    $price: Float
+    $currency: String
+    $frequency: Frequency
     $creditCardId: String
     $tags: [String]
-    $image: [String]
+    $image: String
   ) {
     updateSubscriptionById(
       id: $id

@@ -21,6 +21,19 @@ export const GET_SUBSCRIPTIONS = gql`
   }
 `;
 
+export const GET_CREDIT_CARDS_AND_TAGS = gql`
+  ${FRAGMENT_CREDIT_CARD}
+  ${FRAGMENT_TAG}
+  query GetCreditCardsAndTags {
+    creditCards {
+      ...CreditCardParts
+    }
+    tags {
+      ...TagParts
+    }
+  }
+`;
+
 /* CREDIT CARDS */
 
 export const GET_CREDIT_CARDS = gql`

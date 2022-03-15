@@ -163,6 +163,11 @@ export const lightTheme = {
         backgroundHover: withOpacity(5, colors.lighter),
       },
     },
+    modal: {
+      backdropBackground: withOpacity(80, colors.darker),
+      background: colors.lighter,
+      hoverBackground: withOpacity(5, colors.dark),
+    },
   },
 };
 
@@ -259,6 +264,11 @@ export const darkTheme = {
       item: {
         backgroundHover: withOpacity(5, colors.darker),
       },
+    },
+    modal: {
+      backdropBackground: withOpacity(80, colors.darker),
+      background: colors.dark,
+      hoverBackground: withOpacity(10, colors.darker),
     },
   },
 };
