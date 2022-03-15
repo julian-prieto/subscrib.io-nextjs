@@ -151,6 +151,18 @@ export const lightTheme = {
       editBackground: withOpacity(5, colors.dark),
       color: colors.dark,
     },
+    optionsMenu: {
+      trigger: {
+        hoverBackground: withOpacity(5, colors.dark),
+      },
+      menu: {
+        background: colors.dark,
+        color: colors.lighter,
+      },
+      item: {
+        backgroundHover: withOpacity(5, colors.lighter),
+      },
+    },
   },
 };
 
@@ -236,6 +248,18 @@ export const darkTheme = {
       editBackground: withOpacity(10, colors.light),
       color: colors.light,
     },
+    optionsMenu: {
+      trigger: {
+        hoverBackground: withOpacity(10, colors.light),
+      },
+      menu: {
+        background: colors.lighter,
+        color: colors.darker,
+      },
+      item: {
+        backgroundHover: withOpacity(5, colors.darker),
+      },
+    },
   },
 };
 
@@ -265,8 +289,10 @@ const StyledFlex = styled.div`
   flex-direction: ${(props) => props.direction};
   justify-content: ${(props) => props.justify};
   align-items: ${(props) => props.items};
-  padding: ${(props) => (typeof props.p === "number" ? `${props.p}rem` : props.p?.map((p) => `${p}rem`).join(" "))};
-  margin: ${(props) => (typeof props.m === "number" ? `${props.m}rem` : props.m?.map((m) => `${m}rem`).join(" "))};
+  padding: ${(props) =>
+    typeof props.p === "number" ? `${props.p}rem` : props.p?.map((p) => `${p}rem`).join(" ")};
+  margin: ${(props) =>
+    typeof props.m === "number" ? `${props.m}rem` : props.m?.map((m) => `${m}rem`).join(" ")};
 
   & + & {
     margin-top: 1rem;

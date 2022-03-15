@@ -6,3 +6,4 @@ export { default as AddEditTag } from "./AddEditTag";
 export { default as CreditCard } from "./CreditCard";
 export { default as AddEditCreditCard } from "./AddEditCreditCard";
 export { default as ColorSelector } from "./ColorSelector";
+export { default as OptionsMenu } from "./OptionsMenu";

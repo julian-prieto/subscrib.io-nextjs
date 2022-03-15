@@ -2,14 +2,22 @@ import styled from "styled-components";
 import { withOpacity, getContrastColor } from "ui";
 
 export const Card = styled.div`
+  position: relative;
   border-radius: 0.75rem;
   background: ${(props) => props.theme.colors.subscriptionCard.background};
   box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.1);
 
-  transition: transform 0.2s ease-out;
+  transition: all 0.2s ease-out;
   &:hover {
-    transform: scale(1.01);
+    box-shadow: 2px 2px 8px 0px rgba(0, 0, 0, 0.2);
   }
+`;
+
+export const OptionsWrapper = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0.75rem 0.5rem;
 `;
 
 export const Strip = styled.div`
@@ -17,7 +25,7 @@ export const Strip = styled.div`
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  padding: 0.5rem 1rem 0.5rem 0;
+  padding: 1rem 1rem 0.5rem 0;
   margin-top: 1.5rem;
   margin-bottom: 2rem;
 `;

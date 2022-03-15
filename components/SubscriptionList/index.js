@@ -15,7 +15,7 @@ const SubscriptionList = () => {
       {loading && "Loading Subscriptions..."}
       <Grid>
         {subscriptions.map((subscription) => (
-          <SubscriptionCard key={subscription.id} {...subscription} />
+          <SubscriptionCard key={subscription.id} subscription={subscription} />
         ))}
       </Grid>
     </>
