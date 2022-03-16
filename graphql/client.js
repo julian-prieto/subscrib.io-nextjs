@@ -1,4 +1,4 @@
-import { ApolloClient, InMemoryCache, createHttpLink } from "@apollo/client";
+import { ApolloClient, InMemoryCache, createHttpLink, defaultDataIdFromObject } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { onError } from "@apollo/client/link/error";
 import { getUserToken } from "utils";
@@ -30,7 +30,15 @@ export const graphqlClient = (headerOpts = {}) => {
   });
 
   return new ApolloClient({
-    cache: new InMemoryCache(),
+    cache: new InMemoryCache({
+      dataIdFromObject: (o) => {
+        const id = defaultDataIdFromObject(o);
+        if (o.__typename === "Subscription" && id !== null) {
+          return `${id}:${o.currency}`;
+        }
+        return id;
+      },
+    }),
     link: authLink.concat(errorLink).concat(httpLink),
     ssrMode: typeof window === "undefined",
   });

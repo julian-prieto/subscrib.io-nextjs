@@ -1,5 +1,24 @@
 import { gql } from "@apollo/client";
-import { FRAGMENT_SUBSCRIPTION, FRAGMENT_CREDIT_CARD, FRAGMENT_TAG, FRAGMENT_USER } from "./fragments";
+import {
+  FRAGMENT_SUBSCRIPTION,
+  FRAGMENT_CREDIT_CARD,
+  FRAGMENT_TAG,
+  FRAGMENT_USER,
+  FRAGMENT_CURRENCY,
+} from "./fragments";
+
+/* CURRENCIES */
+
+export const GET_CURRENCIES = gql`
+  ${FRAGMENT_CURRENCY}
+  query GetCurrencies {
+    currencies {
+      ...CurrencyParts
+    }
+  }
+`;
+
+/* SUBSCRIPTIONS */
 
 export const GET_ME = gql`
   ${FRAGMENT_USER}
@@ -14,17 +33,21 @@ export const GET_ME = gql`
 
 export const GET_SUBSCRIPTIONS = gql`
   ${FRAGMENT_SUBSCRIPTION}
-  query GetSubscriptions {
-    subscriptions {
+  query GetSubscriptions($convertToCurrency: String) {
+    subscriptions(convertToCurrency: $convertToCurrency) {
       ...SubscriptionParts
     }
   }
 `;
 
-export const GET_CREDIT_CARDS_AND_TAGS = gql`
+export const GET_SUBSCRIPTION_ASSETS = gql`
   ${FRAGMENT_CREDIT_CARD}
   ${FRAGMENT_TAG}
+  ${FRAGMENT_CURRENCY}
   query GetCreditCardsAndTags {
+    currencies {
+      ...CurrencyParts
+    }
     creditCards {
       ...CreditCardParts
     }

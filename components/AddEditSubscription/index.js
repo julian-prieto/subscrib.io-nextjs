@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 import { useForm, Controller } from "react-hook-form";
-import { GET_CREDIT_CARDS_AND_TAGS, GET_SUBSCRIPTIONS } from "graphql/queries";
+import { GET_SUBSCRIPTION_ASSETS, GET_SUBSCRIPTIONS } from "graphql/queries";
 import { CREATE_SUBSCRIPTION, UPDATE_SUBSCRIPTION_BY_ID } from "graphql/mutations";
 import { Button, Input } from "ui";
 import { Wrapper, Actions, Form } from "./styled";
@@ -9,7 +9,7 @@ import { EMPTY_FIELD, FREQUENCIES, getDirtyValues } from "utils";
 import { Dropdown } from "components";
 
 const AddEditSubscription = ({ subscription, onClose }) => {
-  const { data: dataQuery, loading: loadingQuery } = useQuery(GET_CREDIT_CARDS_AND_TAGS);
+  const { data: dataQuery } = useQuery(GET_SUBSCRIPTION_ASSETS);
   const [
     editSubscription,
     { data: dataEditMutation, loading: loadingEditMutation, called: calledEditMutation },
@@ -22,7 +22,6 @@ const AddEditSubscription = ({ subscription, onClose }) => {
   const {
     register,
     handleSubmit,
-    setValue,
     control,
     formState: { errors, dirtyFields },
   } = useForm({
@@ -54,6 +53,24 @@ const AddEditSubscription = ({ subscription, onClose }) => {
     if (subscription) {
       editSubscription({
         variables: { id: subscription.id, ...getDirtyValues(variables, dirtyFields) },
+        update: (cache, { data: { updateSubscriptionById } }) => {
+          try {
+            const { subscriptions } = cache.readQuery({ query: GET_SUBSCRIPTIONS });
+            cache.writeQuery({
+              query: GET_SUBSCRIPTIONS,
+              data: {
+                subscriptions: subscriptions.map((sub) => {
+                  if (sub.id === updateSubscriptionById.id) {
+                    return updateSubscriptionById;
+                  }
+                  return sub;
+                }),
+              },
+            });
+          } catch (error) {
+            console.log("Error mutating GQL Cache:", error);
+          }
+        },
       });
     } else {
       createSubscription({
@@ -116,6 +133,20 @@ const AddEditSubscription = ({ subscription, onClose }) => {
             maxLength: 3,
           })}
           error={errors.currency && <span>This field is required</span>}
+        />
+        <Controller
+          control={control}
+          name="currency"
+          render={({ field: { onChange, value } }) => (
+            <Dropdown
+              labelSize="2xl"
+              label="Currency"
+              options={dataQuery?.currencies}
+              value={value}
+              onChange={onChange}
+              renderOption={(option) => `[${option.id}] - ${option.name}`}
+            />
+          )}
         />
         <Controller
           control={control}

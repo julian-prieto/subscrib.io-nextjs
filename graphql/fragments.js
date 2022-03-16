@@ -1,5 +1,13 @@
 import { gql } from "@apollo/client";
 
+export const FRAGMENT_CURRENCY = gql`
+  fragment CurrencyParts on Currency {
+    __typename
+    id
+    name
+  }
+`;
+
 export const FRAGMENT_USER = gql`
   fragment UserParts on User {
     __typename

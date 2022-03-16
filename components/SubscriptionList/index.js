@@ -6,12 +6,14 @@ import { useAuth } from "hooks";
 import { SubscriptionCard, Modal, AddEditSubscription } from "components";
 import { Header, H1, AddIcon, Grid } from "./styled";
 
-const SubscriptionList = () => {
+const SubscriptionList = ({ convertToCurrency }) => {
   const { user } = useAuth();
-
   const [isCreating, setIsCreating] = useState(false);
 
-  const { data: dataQuery, loading: loadingQuery } = useQuery(GET_SUBSCRIPTIONS, { skip: !user });
+  const { data: dataQuery, loading: loadingQuery } = useQuery(GET_SUBSCRIPTIONS, {
+    variables: { convertToCurrency },
+    skip: !user,
+  });
 
   const CREATE_MODAL = {
     title: <span>Create Subscription</span>,
@@ -34,9 +36,11 @@ const SubscriptionList = () => {
           ))}
         </Grid>
       ) : (
-        <div>
-          No subscriptions in your account yet. Start creating some using the + icon on the top right side!
-        </div>
+        !loadingQuery && (
+          <div>
+            No subscriptions in your account yet. Start creating some using the + icon on the top right side!
+          </div>
+        )
       )}
       <Modal isOpen={isCreating} onClose={() => setIsCreating(false)} content={CREATE_MODAL} />
     </>

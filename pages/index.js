@@ -1,9 +1,20 @@
 import Head from "next/head";
-import { SubscriptionList } from "components";
+import { SubscriptionList, SubscriptionSummary } from "components";
 import { useAuth } from "hooks";
+import { useState } from "react";
+import { EMPTY_FIELD } from "utils";
 
 const Subscrib = () => {
   const { LoginButton, user } = useAuth();
+  const [convertToCurrency, setConvertToCurrency] = useState();
+  const handleChangeCurrency = (event) => {
+    const currency = event.target.value;
+    if (currency === EMPTY_FIELD) {
+      setConvertToCurrency();
+      return;
+    }
+    setConvertToCurrency(currency);
+  };
 
   return (
     <>
@@ -13,7 +24,16 @@ const Subscrib = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       {user ? (
-        <SubscriptionList />
+        <>
+          <select value={convertToCurrency} onChange={handleChangeCurrency}>
+            <option value={EMPTY_FIELD}>{EMPTY_FIELD}</option>
+            <option value="USD">USD</option>
+            <option value="EUR">EUR</option>
+            <option value="ARS">ARS</option>
+          </select>
+          <SubscriptionList convertToCurrency={convertToCurrency} />
+          <SubscriptionSummary convertToCurrency={convertToCurrency} />
+        </>
       ) : (
         <div style={{ display: "flex", gap: "2rem", flexDirection: "column", alignItems: "center" }}>
           <div>Login to see your dashboard</div>

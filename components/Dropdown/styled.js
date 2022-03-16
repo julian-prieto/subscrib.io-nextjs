@@ -80,6 +80,9 @@ export const SelectMenu = styled.div`
   padding: 0.5rem 0;
 
   width: 100%;
+  max-height: 20rem;
+  overflow-y: auto;
+
   transform: translate(0px, 0.25rem);
 
   border-radius: 0.25rem;
