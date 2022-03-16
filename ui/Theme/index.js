@@ -301,6 +301,7 @@ const StyledFlex = styled.div`
   flex-direction: ${(props) => props.direction};
   justify-content: ${(props) => props.justify};
   align-items: ${(props) => props.items};
+  gap: ${(props) => props.gap};
   padding: ${(props) =>
     typeof props.p === "number" ? `${props.p}rem` : props.p?.map((p) => `${p}rem`).join(" ")};
   margin: ${(props) =>

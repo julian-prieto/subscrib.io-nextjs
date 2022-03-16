@@ -1,4 +1,5 @@
 import { useTheme, useAuth } from "hooks";
+import Link from "next/link";
 import styled from "styled-components";
 import { Button, Flex, Container } from "ui";
 
@@ -18,18 +19,24 @@ const Header = () => {
   const { LoginButton, LogoutButton, user } = useAuth();
 
   return (
-    <StyledHeader>
-      <Container>
-        <Flex justify="space-between" items="center" p={[0.5, 0]}>
-          <Title>Subscrib.io</Title>
-          {!user && <LoginButton />}
-          {user && <LogoutButton />}
-          <Button color="secondary" onClick={() => toggleTheme()}>
-            {theme === "light" ? "🌙" : "🌞"}
-          </Button>
-        </Flex>
-      </Container>
-    </StyledHeader>
+    <>
+      <StyledHeader>
+        <Container>
+          <Flex justify="space-between" items="center" p={[0.5, 0]}>
+            <Title>Subscrib.io</Title>
+            {!user && <LoginButton />}
+            {user && <LogoutButton />}
+            <Button color="secondary" onClick={() => toggleTheme()}>
+              {theme === "light" ? "🌙" : "🌞"}
+            </Button>
+          </Flex>
+        </Container>
+      </StyledHeader>
+      <Flex justify="center" items="center" gap="1rem">
+        <Link href="/">Home</Link> - <Link href="/credit-cards">Credit Cards</Link> -{" "}
+        <Link href="/tags">Tags</Link>
+      </Flex>
+    </>
   );
 };
 
