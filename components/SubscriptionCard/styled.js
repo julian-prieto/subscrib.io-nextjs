@@ -7,7 +7,7 @@ export const Card = styled.div`
   background: ${(props) => props.theme.colors.subscriptionCard.background};
   box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.1);
 
-  transition: all 0.2s ease-out;
+  transition: box-shadow 0.2s ease-out;
   &:hover {
     box-shadow: 2px 2px 8px 0px rgba(0, 0, 0, 0.2);
   }

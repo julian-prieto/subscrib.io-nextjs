@@ -95,18 +95,21 @@ const AddEditSubscription = ({ subscription, onClose }) => {
         <Input
           label="Title"
           labelSize="2xl"
+          placeholder="e.g. Netflix"
           {...register("title", { required: true, minLength: 2, maxLength: 25 })}
           error={errors.title && <span>This field is required</span>}
         />
         <Input
           label="Price"
           labelSize="2xl"
+          placeholder="e.g. 9.99"
           {...register("price", { required: true, minLength: 1, maxLength: 25 })}
           error={errors.price && <span>This field is required</span>}
         />
         <Input
           label="Currency"
           labelSize="2xl"
+          placeholder="e.g. USD"
           {...register("currency", {
             required: true,
             minLength: 3,
