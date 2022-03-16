@@ -4,15 +4,25 @@ import { useForm } from "react-hook-form";
 import { FaTrash, FaPen, FaSpinner, FaCheck } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 import { DELETE_CREDIT_CARD_BY_ID, UPDATE_CREDIT_CARD_BY_ID } from "graphql/mutations";
-import { Wrapper, CardType, CardNumber, CardActions, CardIcon, CardNumberInput, CardTypeInput } from "./styled";
+import {
+  Wrapper,
+  CardType,
+  CardNumber,
+  CardActions,
+  CardIcon,
+  CardNumberInput,
+  CardTypeInput,
+} from "./styled";
 import { ColorSelector } from "components";
 
 const CreditCard = ({ creditCard, allowDestroy, allowEdit }) => {
   const [isEditing, setIsEditing] = useState(false);
 
   const [deleteCreditCard, { loading: loadingDeleteMutation }] = useMutation(DELETE_CREDIT_CARD_BY_ID);
-  const [editCreditCard, { data: dataEditMutation, loading: loadingEditMutation, called: calledEditMutation }] =
-    useMutation(UPDATE_CREDIT_CARD_BY_ID);
+  const [
+    editCreditCard,
+    { data: dataEditMutation, loading: loadingEditMutation, called: calledEditMutation },
+  ] = useMutation(UPDATE_CREDIT_CARD_BY_ID);
 
   const {
     register,
@@ -27,8 +37,12 @@ const CreditCard = ({ creditCard, allowDestroy, allowEdit }) => {
 
   const handleEditCreditCard = (form) => {
     editCreditCard({
-      variables: { id: creditCard.id, type: form.type, number: form.number, color: form.color },
-      refetchQueries: ["GetCreditCards"],
+      variables: {
+        id: creditCard.id,
+        type: form.type,
+        number: form.number,
+        color: form.color,
+      },
     });
   };
 
@@ -38,7 +52,18 @@ const CreditCard = ({ creditCard, allowDestroy, allowEdit }) => {
   }, [setIsEditing, reset]);
 
   const handleDestroyCreditCard = () => {
-    deleteCreditCard({ variables: { id: creditCard.id }, refetchQueries: ["GetCreditCards", "GetSubscriptions"] });
+    deleteCreditCard({
+      variables: { id: creditCard.id },
+      update: (cache, { data: { deleteCreditCardById } }) => {
+        try {
+          const normalizedId = cache.identify({ id: deleteCreditCardById.id, __typename: "CreditCard" });
+          cache.evict({ id: normalizedId });
+          cache.gc();
+        } catch (error) {
+          console.log("Error mutating GQL Cache:", error);
+        }
+      },
+    });
   };
 
   const handleUserKeyPress = (e) => {

@@ -22,7 +22,7 @@ const Tag = ({ tag, allowDestroy, allowEdit, onDelete, isLoading }) => {
   } = useForm();
 
   const handleEditTag = (form) => {
-    editTag({ variables: { id: tag.id, name: form.name }, refetchQueries: ["GetTags"] });
+    editTag({ variables: { id: tag.id, name: form.name } });
   };
 
   const handleCancelEditTag = useCallback(() => {
@@ -35,7 +35,18 @@ const Tag = ({ tag, allowDestroy, allowEdit, onDelete, isLoading }) => {
       onDelete(tag);
       return;
     }
-    deleteTag({ variables: { id: tag.id }, refetchQueries: ["GetTags"] });
+    deleteTag({
+      variables: { id: tag.id },
+      update: (cache, { data: { deleteTagById } }) => {
+        try {
+          const normalizedId = cache.identify({ id: deleteTagById.id, __typename: "Tag" });
+          cache.evict({ id: normalizedId });
+          cache.gc();
+        } catch (error) {
+          console.log("Error mutating GQL Cache:", error);
+        }
+      },
+    });
   };
 
   const handleUserKeyPress = (e) => {

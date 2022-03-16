@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { DELETE_SUBSCRIPTION_BY_ID } from "graphql/mutations";
+import { GET_SUBSCRIPTIONS } from "graphql/queries";
 import { FaTrash, FaPen } from "react-icons/fa";
 import { Tag, OptionsMenu, Modal, AddEditSubscription } from "components";
 import { getCreditCardType, getFrequency } from "utils";
@@ -28,7 +29,18 @@ const SubscriptionCard = ({ subscription }) => {
   const [deleteSubscription, { loading: loadingDeleteMutation }] = useMutation(DELETE_SUBSCRIPTION_BY_ID);
 
   const handleDestroySubscription = () => {
-    deleteSubscription({ variables: { id }, refetchQueries: ["GetSubscriptions"] });
+    deleteSubscription({
+      variables: { id },
+      update: (cache, { data: { deleteSubscriptionById } }) => {
+        try {
+          const normalizedId = cache.identify({ id: deleteSubscriptionById.id, __typename: "Subscription" });
+          cache.evict({ id: normalizedId });
+          cache.gc();
+        } catch (error) {
+          console.log("Error mutating GQL Cache:", error);
+        }
+      },
+    });
     setIsDeleting(false);
   };
 

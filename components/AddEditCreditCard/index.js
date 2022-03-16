@@ -12,23 +12,35 @@ const AddEditCreditCard = () => {
   const { user } = useAuth();
 
   const { data: dataQuery, loading: loadingQuery } = useQuery(GET_CREDIT_CARDS, { skip: !user });
-  const [createCreditCard, { data: dataCreateMutation, loading: loadingCreateMutation, called: calledCreateMutation }] =
-    useMutation(CREATE_CREDIT_CARD);
+  const [
+    createCreditCard,
+    { data: dataCreateMutation, loading: loadingCreateMutation, called: calledCreateMutation },
+  ] = useMutation(CREATE_CREDIT_CARD);
 
   const {
     register,
     handleSubmit,
-    watch,
     reset,
     setValue,
-    getValues,
     formState: { errors },
   } = useForm();
 
   const onSubmit = (form) => {
     createCreditCard({
       variables: { type: form.type, color: form.color, number: form.number },
-      refetchQueries: ["GetCreditCards"],
+      update: (cache, { data: { createCreditCard } }) => {
+        try {
+          const { creditCards } = cache.readQuery({ query: GET_CREDIT_CARDS });
+          cache.writeQuery({
+            query: GET_CREDIT_CARDS,
+            data: {
+              creditCards: [...creditCards, createCreditCard],
+            },
+          });
+        } catch (error) {
+          console.log("Error mutating GQL Cache:", error);
+        }
+      },
     });
   };
 
@@ -52,7 +64,6 @@ const AddEditCreditCard = () => {
       <H2>Create Credit Card</H2>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Input
-          hasValue={!!watch("type")}
           label="Credit card name / type"
           {...register("type", { required: false, minLength: 2, maxLength: 15 })}
           error={errors.type && "Error!"}
@@ -60,7 +71,6 @@ const AddEditCreditCard = () => {
         />
 
         <Input
-          hasValue={!!watch("number")}
           label="4 Digit identifier"
           {...register("number", { required: false, minLength: 4, maxLength: 4 })}
           error={errors.number && "Error!"}
@@ -68,7 +78,11 @@ const AddEditCreditCard = () => {
         />
         <ColorSelector onChange={(v) => setValue("color", v)} />
         <Actions>
-          <Button type="submit" isLoading={loadingCreateMutation} disabled={loadingCreateMutation || formHasErrors}>
+          <Button
+            type="submit"
+            isLoading={loadingCreateMutation}
+            disabled={loadingCreateMutation || formHasErrors}
+          >
             ADD CREDIT CARD
           </Button>
         </Actions>

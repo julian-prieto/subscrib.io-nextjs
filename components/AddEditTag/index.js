@@ -12,19 +12,35 @@ const AddEditTag = () => {
   const { user } = useAuth();
 
   const { data: dataQuery, loading: loadingQuery } = useQuery(GET_TAGS, { skip: !user });
-  const [createTag, { data: dataCreateMutation, loading: loadingCreateMutation, called: calledCreateMutation }] =
-    useMutation(CREATE_TAG);
+  const [
+    createTag,
+    { data: dataCreateMutation, loading: loadingCreateMutation, called: calledCreateMutation },
+  ] = useMutation(CREATE_TAG);
 
   const {
     register,
     handleSubmit,
-    watch,
     reset,
     formState: { errors },
   } = useForm();
 
   const onSubmit = (form) => {
-    createTag({ variables: { name: form.name }, refetchQueries: ["GetTags"] });
+    createTag({
+      variables: { name: form.name },
+      update: (cache, { data: { createTag } }) => {
+        try {
+          const { tags } = cache.readQuery({ query: GET_TAGS });
+          cache.writeQuery({
+            query: GET_TAGS,
+            data: {
+              tags: [...tags, createTag],
+            },
+          });
+        } catch (error) {
+          console.log("Error mutating GQL Cache:", error);
+        }
+      },
+    });
   };
 
   const formHasErrors = !!Object.keys(errors).length;
@@ -47,14 +63,17 @@ const AddEditTag = () => {
       <H2>Create tag</H2>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Input
-          hasValue={!!watch("name")}
           label="Tag name"
           {...register("name", { required: true, minLength: 2, maxLength: 15 })}
           disabled={loadingCreateMutation}
         />
         {errors.name && <span>This field is required</span>}
         <Actions>
-          <Button type="submit" isLoading={loadingCreateMutation} disabled={loadingCreateMutation || formHasErrors}>
+          <Button
+            type="submit"
+            isLoading={loadingCreateMutation}
+            disabled={loadingCreateMutation || formHasErrors}
+          >
             ADD TAG
           </Button>
         </Actions>

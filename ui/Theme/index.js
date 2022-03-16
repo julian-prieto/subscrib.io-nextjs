@@ -116,6 +116,7 @@ export const lightTheme = {
     },
     input: {
       background: colors.light,
+      labelBackground: withOpacity(10, colors.darker),
       color: colors.darker,
       outline: withOpacity(75, colors.darker),
     },
@@ -218,8 +219,9 @@ export const darkTheme = {
     },
     input: {
       background: colors.darker,
+      labelBackground: withOpacity(5, colors.lighter),
       color: colors.lighter,
-      outline: withOpacity(75, colors.lighter),
+      outline: withOpacity(25, colors.lighter),
     },
     collapse: {
       background: colors.darker,

@@ -1,5 +1,6 @@
 export { default as Header } from "./Header";
 export { default as OptionsMenu } from "./OptionsMenu";
+export { default as Dropdown } from "./Dropdown";
 export { default as Modal } from "./Modal";
 export { default as AddEditSubscription } from "./AddEditSubscription";
 export { default as AddEditCreditCard } from "./AddEditCreditCard";

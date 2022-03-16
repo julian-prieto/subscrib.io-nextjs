@@ -1,24 +1,61 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
+
+const LABEL_SIZES = {
+  xs: "2rem",
+  md: "4rem",
+  lg: "6rem",
+  xl: "7rem",
+  "2xl": "8rem",
+  "3xl": "9rem",
+  "4xl": "10rem",
+  auto: "unset",
+};
 
 export const Field = styled.div`
   display: flex;
-  flex-direction: column;
-  & > * + * {
-    margin-top: 0.25rem;
-  }
-`;
-
-export const StyledInput = styled.input`
-  padding: 0.75rem 1rem;
 
   border: none;
   border-radius: 0.25rem;
 
   background-color: ${(props) => props.theme.colors.input.background};
+
+  & + & {
+    margin-top: 1rem;
+  }
+
+  &:focus-within {
+    outline: 1px solid ${(props) => props.theme.colors.input.outline};
+  }
+`;
+
+export const StyledLabel = styled.label`
+  padding: 0.5rem 1rem;
+
+  ${(props) =>
+    props.labelSize &&
+    css`
+      width: ${LABEL_SIZES[props.labelSize] ? LABEL_SIZES[props.labelSize] : "unset"};
+    `}
+
+  border-top-left-radius: 0.25rem;
+  border-bottom-left-radius: 0.25rem;
+  background-color: ${(props) => props.theme.colors.input.labelBackground};
+`;
+
+export const StyledInput = styled.input`
+  padding: 0.25rem 0.5rem;
+  width: 100%;
+
+  border-top-right-radius: 0.25rem;
+  border-bottom-right-radius: 0.25rem;
+
+  background-color: transparent;
+  border: none;
+
   color: ${(props) => props.theme.colors.input.color};
 
   &:focus {
-    outline: 1px solid ${(props) => props.theme.colors.input.outline};
+    outline: none;
   }
 
   &:-webkit-autofill,
@@ -30,21 +67,6 @@ export const StyledInput = styled.input`
   }
   &:-webkit-autofill {
     -webkit-text-fill-color: ${(props) => props.theme.colors.input.color} !important;
-  }
-`;
-
-export const StyledLabel = styled.label`
-  order: -1;
-  padding-left: 0.5rem;
-  margin-top: 0.25rem;
-
-  transform: ${(props) => (props.hasValue ? "translate(0rem, -0.5rem)" : "translate(0.5rem, 2rem)")};
-  pointer-events: none;
-
-  transition: all 0.1s ease-out;
-
-  ${StyledInput}:focus + & {
-    transform: translate(0rem, -0.5rem);
   }
 `;
 
