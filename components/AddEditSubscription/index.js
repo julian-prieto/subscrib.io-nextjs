@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useQuery, useMutation } from "@apollo/client";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { GET_CREDIT_CARDS_AND_TAGS, GET_SUBSCRIPTIONS } from "graphql/queries";
 import { CREATE_SUBSCRIPTION, UPDATE_SUBSCRIPTION_BY_ID } from "graphql/mutations";
 import { Button, Input } from "ui";
@@ -23,6 +23,7 @@ const AddEditSubscription = ({ subscription, onClose }) => {
     register,
     handleSubmit,
     setValue,
+    control,
     formState: { errors, dirtyFields },
   } = useForm({
     defaultValues: subscription
@@ -34,7 +35,9 @@ const AddEditSubscription = ({ subscription, onClose }) => {
           creditCardId: subscription.creditCard ? subscription.creditCard.id : EMPTY_FIELD,
           tags: subscription.tags ? `[${subscription?.tags?.map((t) => `"${t.id}"`).join(", ")}]` : "[]",
         }
-      : null,
+      : {
+          frequency: "MONTHLY",
+        },
   });
 
   const onSubmit = (form) => {
@@ -91,19 +94,19 @@ const AddEditSubscription = ({ subscription, onClose }) => {
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Input
           label="Title"
-          labelSize="4xl"
+          labelSize="2xl"
           {...register("title", { required: true, minLength: 2, maxLength: 25 })}
           error={errors.title && <span>This field is required</span>}
         />
         <Input
           label="Price"
-          labelSize="4xl"
+          labelSize="2xl"
           {...register("price", { required: true, minLength: 1, maxLength: 25 })}
           error={errors.price && <span>This field is required</span>}
         />
         <Input
           label="Currency"
-          labelSize="4xl"
+          labelSize="2xl"
           {...register("currency", {
             required: true,
             minLength: 3,
@@ -111,42 +114,42 @@ const AddEditSubscription = ({ subscription, onClose }) => {
           })}
           error={errors.currency && <span>This field is required</span>}
         />
-        <label>Frequency</label>
-        <select {...register("frequency", { required: false })}>
-          {Object.keys(FREQUENCIES).map((freq) => (
-            <option key={freq} value={freq}>
-              {freq}
-            </option>
-          ))}
-        </select>
-        <br />
-        {dataQuery?.creditCards && (
-          <>
-            <label>Credit Card</label>
-            <select {...register("creditCardId", { required: false })}>
-              <option value={EMPTY_FIELD}>{EMPTY_FIELD}</option>
-              {dataQuery?.creditCards?.map((cc) => (
-                <option key={cc.id} value={cc.id}>
-                  {cc.type} [{cc.number}]
-                </option>
-              ))}
-            </select>
-          </>
-        )}
+        <Controller
+          control={control}
+          name="frequency"
+          render={({ field: { onChange, value } }) => (
+            <Dropdown
+              labelSize="2xl"
+              label="Frequency"
+              options={Object.keys(FREQUENCIES).map((freq) => freq)}
+              value={value}
+              onChange={onChange}
+              renderOption={(option) => option}
+            />
+          )}
+        />
+        <Controller
+          control={control}
+          name="creditCardId"
+          render={({ field: { onChange, value } }) => (
+            <Dropdown
+              labelSize="2xl"
+              label="Credit Card"
+              options={dataQuery?.creditCards}
+              value={value}
+              onChange={onChange}
+              allowEmptyValue
+              renderOption={(option) => `${option.type} [${option.number}]`}
+            />
+          )}
+        />
         <Input
           label="Tags"
-          labelSize="4xl"
+          labelSize="2xl"
           {...register("tags", {
             required: false,
           })}
           error={errors.name && "This field is required"}
-        />
-        <Dropdown
-          labelSize="4xl"
-          label="Credit Card"
-          options={dataQuery?.creditCards}
-          value={subscription?.creditCard ? subscription.creditCard.id : EMPTY_FIELD}
-          onChange={(v) => setValue("creditCardId", v)}
         />
         <Actions>
           <Button type="button" color="secondary" onClick={onClose}>

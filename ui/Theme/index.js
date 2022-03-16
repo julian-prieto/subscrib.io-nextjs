@@ -129,6 +129,12 @@ export const lightTheme = {
       background: colors.lighter,
       color: colors.darker,
     },
+    select: {
+      background: colors.light,
+      labelBackground: withOpacity(10, colors.darker),
+      color: colors.darker,
+      outline: withOpacity(75, colors.darker),
+    },
 
     // Specific components
     subscriptionCard: {
@@ -231,6 +237,12 @@ export const darkTheme = {
     card: {
       background: colors.dark,
       color: colors.light,
+    },
+    select: {
+      background: colors.darker,
+      labelBackground: withOpacity(5, colors.lighter),
+      color: colors.lighter,
+      outline: withOpacity(25, colors.lighter),
     },
 
     // Specific components

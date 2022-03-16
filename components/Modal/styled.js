@@ -27,9 +27,15 @@ export const Backdrop = styled.div`
 `;
 
 export const ModalElement = styled.div`
-  position: relative;
-
+  width: calc(100% - 1.5rem);
   padding: 1rem;
+
+  @media ${(props) => props.theme.devices.sm} {
+    width: unset;
+    min-width: 32rem;
+  }
+
+  position: relative;
 
   border-radius: 0.5rem;
 

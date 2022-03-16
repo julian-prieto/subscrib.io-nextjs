@@ -3,7 +3,9 @@ import styled from "styled-components";
 export const Wrapper = styled.div``;
 
 export const Form = styled.form`
-  width: 32rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 `;
 
 export const Actions = styled.div`

@@ -19,10 +19,6 @@ export const Field = styled.div`
 
   background-color: ${(props) => props.theme.colors.input.background};
 
-  & + & {
-    margin-top: 1rem;
-  }
-
   &:focus-within {
     outline: 1px solid ${(props) => props.theme.colors.input.outline};
   }
@@ -43,8 +39,9 @@ export const StyledLabel = styled.label`
 `;
 
 export const StyledInput = styled.input`
+  flex: 1;
+
   padding: 0.25rem 0.5rem;
-  width: 100%;
 
   border-top-right-radius: 0.25rem;
   border-bottom-right-radius: 0.25rem;

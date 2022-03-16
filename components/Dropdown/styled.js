@@ -12,20 +12,15 @@ const LABEL_SIZES = {
 };
 
 export const Wrapper = styled.div`
+  position: relative;
   display: flex;
 
   border: none;
   border-radius: 0.25rem;
 
-  background-color: ${(props) => props.theme.colors.input.background};
+  background-color: ${(props) => props.theme.colors.select.background};
 
-  & + & {
-    margin-top: 1rem;
-  }
-
-  &:focus-within {
-    outline: 1px solid ${(props) => props.theme.colors.input.outline};
-  }
+  outline: ${(props) => (props.isOpen ? `1px solid ${props.theme.colors.select.outline}` : "none")};
 `;
 
 export const StyledLabel = styled.label`
@@ -39,38 +34,74 @@ export const StyledLabel = styled.label`
 
   border-top-left-radius: 0.25rem;
   border-bottom-left-radius: 0.25rem;
-  background-color: ${(props) => props.theme.colors.input.labelBackground};
+  background-color: ${(props) => props.theme.colors.select.labelBackground};
 `;
 
-// export const StyledInput = styled.input`
-//   padding: 0.25rem 0.5rem;
-//   width: 100%;
+export const Select = styled.div`
+  position: relative;
+  display: flex;
+  align-items: stretch;
 
-//   border-top-right-radius: 0.25rem;
-//   border-bottom-right-radius: 0.25rem;
+  flex: 1;
+`;
 
-//   background-color: transparent;
-//   border: none;
+export const SelectItem = styled.div`
+  display: flex;
+  align-items: center;
+  flex: 1;
 
-//   color: ${(props) => props.theme.colors.input.color};
+  padding: 0 0.5rem;
 
-//   &:focus {
-//     outline: none;
-//   }
+  cursor: pointer;
+`;
 
-//   &:-webkit-autofill,
-//   &:-webkit-autofill:hover,
-//   &:-webkit-autofill:focus,
-//   &:-webkit-autofill:active {
-//     box-shadow: 0 0 0 30px ${(props) => props.theme.colors.input.background} inset !important;
-//     -webkit-box-shadow: 0 0 0 30px ${(props) => props.theme.colors.input.background} inset !important;
-//   }
-//   &:-webkit-autofill {
-//     -webkit-text-fill-color: ${(props) => props.theme.colors.input.color} !important;
-//   }
-// `;
+export const SelectIcon = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 0 0.5rem;
+  transition: transform 0.2s ease-in;
+  transform: rotate(0);
+  ${(props) =>
+    props.isOpen &&
+    css`
+      transform: rotate(180deg);
+    `};
+`;
 
-// export const ErrorMessage = styled.div`
-//   color: ${(props) => props.theme.colors.alert};
-//   font-weight: 500;
-// `;
+export const SelectMenu = styled.div`
+  display: ${(props) => (props.isOpen ? "flex" : "none")};
+  flex-direction: column;
+  gap: 0.25rem;
+
+  position: absolute;
+  top: 100%;
+  left: 0;
+
+  padding: 0.5rem 0;
+
+  width: 100%;
+  transform: translate(0px, 0.25rem);
+
+  border-radius: 0.25rem;
+
+  outline: ${(props) => (props.isOpen ? `1px solid ${props.theme.colors.select.outline}` : "none")};
+
+  z-index: 30;
+
+  background-color: ${(props) => props.theme.colors.select.background};
+
+  &:hover {
+  }
+`;
+
+export const Backdrop = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  z-index: 30;
+  background-color: transparent;
+`;
