@@ -6,6 +6,14 @@ import { IoClose } from "react-icons/io5";
 import { DELETE_TAG_BY_ID, UPDATE_TAG_BY_ID } from "graphql/mutations";
 import { Wrapper, TagName, TagIcon, TagInput } from "./styled";
 
+const ERROR_MESSAGES = {
+  name: {
+    required: "This field is required",
+    minLength: "Minimum length: 2",
+    maxLength: "Maximum length: 20",
+  },
+};
+
 const Tag = ({ tag, allowDestroy, allowEdit, onDelete, isLoading }) => {
   const [isEditing, setIsEditing] = useState(false);
 
@@ -73,8 +81,8 @@ const Tag = ({ tag, allowDestroy, allowEdit, onDelete, isLoading }) => {
         <>
           <TagInput
             onKeyPress={handleUserKeyPress}
-            error={errors.name}
-            {...register("name", { value: tag.name, required: true, minLength: 2, maxLength: 15 })}
+            error={errors.name && ERROR_MESSAGES.name[errors.name.type]}
+            {...register("name", { value: tag.name, required: true, minLength: 2, maxLength: 20 })}
           />
           <TagIcon
             isLoading={loadingEditMutation}

@@ -8,6 +8,14 @@ import { Button, Input } from "ui";
 import { Tag } from "components";
 import { Actions, Card, Form, H1, H2, TagList } from "./styled";
 
+const ERROR_MESSAGES = {
+  name: {
+    required: "This field is required",
+    minLength: "Minimum length: 2",
+    maxLength: "Maximum length: 20",
+  },
+};
+
 const AddEditTag = () => {
   const { user } = useAuth();
 
@@ -64,10 +72,11 @@ const AddEditTag = () => {
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Input
           label="Tag name"
-          {...register("name", { required: true, minLength: 2, maxLength: 15 })}
+          placeholder="e.g. Work"
+          {...register("name", { required: true, minLength: 2, maxLength: 20 })}
           disabled={loadingCreateMutation}
+          error={errors.name && ERROR_MESSAGES.name[errors.name.type]}
         />
-        {errors.name && <span>This field is required</span>}
         <Actions>
           <Button
             type="submit"

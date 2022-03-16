@@ -68,6 +68,11 @@ export const StyledInput = styled.input`
 `;
 
 export const ErrorMessage = styled.div`
+  display: flex;
+  align-items: center;
+
+  padding: 0rem 1rem;
+
   color: ${(props) => props.theme.colors.alert};
   font-weight: 500;
 `;

@@ -10,8 +10,8 @@ const Input = ({ label, error, labelSize = "auto", ...props }, ref) => (
         </StyledLabel>
       )}
       <StyledInput ref={ref} {...props} />
+      {error && <ErrorMessage>{error}</ErrorMessage>}
     </Field>
-    {error && <ErrorMessage>{error}</ErrorMessage>}
   </>
 );
 
