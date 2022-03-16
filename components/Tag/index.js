@@ -76,7 +76,7 @@ const Tag = ({ tag, allowDestroy, allowEdit, onDelete, isLoading }) => {
   }, [isEditing, setFocus]);
 
   return (
-    <Wrapper>
+    <Wrapper managing={allowEdit || allowDestroy}>
       {isEditing ? (
         <>
           <TagInput

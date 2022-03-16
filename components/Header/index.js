@@ -16,7 +16,7 @@ const Title = styled.h1`
 
 const Header = () => {
   const { theme, toggleTheme } = useTheme();
-  const { LoginButton, LogoutButton, user } = useAuth();
+  const { user } = useAuth();
 
   return (
     <>
@@ -24,18 +24,18 @@ const Header = () => {
         <Container>
           <Flex justify="space-between" items="center" p={[0.5, 0]}>
             <Title>Subscrib.io</Title>
-            {!user && <LoginButton />}
-            {user && <LogoutButton />}
             <Button color="secondary" onClick={() => toggleTheme()}>
               {theme === "light" ? "🌙" : "🌞"}
             </Button>
           </Flex>
         </Container>
       </StyledHeader>
-      <Flex justify="center" items="center" gap="1rem">
-        <Link href="/">Home</Link> - <Link href="/credit-cards">Credit Cards</Link> -{" "}
-        <Link href="/tags">Tags</Link>
-      </Flex>
+      {user && (
+        <Flex justify="center" items="center" gap="1rem" m={[0, 0, 2, 0]}>
+          <Link href="/">Home</Link> - <Link href="/credit-cards">Credit Cards</Link> -{" "}
+          <Link href="/tags">Tags</Link>
+        </Flex>
+      )}
     </>
   );
 };

@@ -64,9 +64,9 @@ const AddEditTag = () => {
       <H1>Tags</H1>
       {loadingQuery && "Loading Tags..."}
       <TagList>
-        {dataQuery?.tags?.map((tag) => (
-          <Tag key={tag.id} tag={tag} allowEdit allowDestroy />
-        ))}
+        {!!dataQuery?.tags?.length
+          ? dataQuery?.tags?.map((tag) => <Tag key={tag.id} tag={tag} allowEdit allowDestroy />)
+          : "No tags in your account yet. Create some of using the form below!"}
       </TagList>
       <H2>Create tag</H2>
       <Form onSubmit={handleSubmit(onSubmit)}>

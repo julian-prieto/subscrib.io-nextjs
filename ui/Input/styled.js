@@ -55,6 +55,8 @@ export const StyledInput = styled.input`
     outline: none;
   }
 
+  font-size: 1rem;
+
   &:-webkit-autofill,
   &:-webkit-autofill:hover,
   &:-webkit-autofill:focus,

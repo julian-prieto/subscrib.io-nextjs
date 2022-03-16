@@ -11,7 +11,7 @@ const SubscriptionList = () => {
 
   const [isCreating, setIsCreating] = useState(false);
 
-  const { data: { subscriptions = [] } = {}, loading } = useQuery(GET_SUBSCRIPTIONS, { skip: !user });
+  const { data: dataQuery, loading: loadingQuery } = useQuery(GET_SUBSCRIPTIONS, { skip: !user });
 
   const CREATE_MODAL = {
     title: <span>Create Subscription</span>,
@@ -26,12 +26,18 @@ const SubscriptionList = () => {
           <FaPlus />
         </AddIcon>
       </Header>
-      {loading && "Loading Subscriptions..."}
-      <Grid>
-        {subscriptions.map((subscription) => (
-          <SubscriptionCard key={subscription.id} subscription={subscription} />
-        ))}
-      </Grid>
+      {loadingQuery && "Loading Subscriptions..."}
+      {!!dataQuery?.subscriptions?.length ? (
+        <Grid>
+          {dataQuery?.subscriptions?.map((subscription) => (
+            <SubscriptionCard key={subscription.id} subscription={subscription} />
+          ))}
+        </Grid>
+      ) : (
+        <div>
+          No subscriptions in your account yet. Start creating some using the + icon on the top right side!
+        </div>
+      )}
       <Modal isOpen={isCreating} onClose={() => setIsCreating(false)} content={CREATE_MODAL} />
     </>
   );

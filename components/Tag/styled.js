@@ -12,6 +12,8 @@ export const Wrapper = styled.div`
 
   background-color: ${(props) => props.theme.colors.tag.background};
   color: ${(props) => props.theme.colors.tag.color};
+
+  font-size: ${(props) => (props.managing ? "1rem" : "0.75rem")};
 `;
 
 export const TagName = styled.div`
@@ -20,8 +22,6 @@ export const TagName = styled.div`
   align-items: center;
 
   padding: 0.25rem 0.5rem;
-
-  font-size: 0.75rem;
 `;
 
 export const TagIcon = styled.div`
@@ -38,8 +38,6 @@ export const TagIcon = styled.div`
       border-top-left-radius: 0;
       border-bottom-left-radius: 0;
     `}
-
-  font-size: 0.75rem;
 
   &:hover {
     cursor: pointer;
@@ -80,7 +78,6 @@ export const TagIcon = styled.div`
 export const TagInput = styled(Input)`
   padding: 0 0.25rem;
   margin: 0 0.25rem;
-  font-size: 0.75rem;
 
   &:focus {
     outline: ${(props) => (props.error ? "1px solid red" : "none")};

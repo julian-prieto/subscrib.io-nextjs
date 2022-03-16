@@ -70,11 +70,15 @@ const AddEditCreditCard = () => {
     <Card>
       <H1>CreditCards</H1>
       {loadingQuery && "Loading Credit Cards..."}
-      <Grid>
-        {dataQuery?.creditCards?.map((creditCard) => (
-          <CreditCard key={creditCard.id} creditCard={creditCard} allowDestroy allowEdit />
-        ))}
-      </Grid>
+      {!!dataQuery?.creditCards?.length ? (
+        <Grid>
+          {dataQuery?.creditCards?.map((creditCard) => (
+            <CreditCard key={creditCard.id} creditCard={creditCard} allowDestroy allowEdit />
+          ))}
+        </Grid>
+      ) : (
+        <div>No tags in your account yet. Create some of using the form below!</div>
+      )}
       <H2>Create Credit Card</H2>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Input
