@@ -1,6 +1,6 @@
 import { ThemeProvider, createGlobalStyle } from "styled-components";
 import { darkTheme, lightTheme, Container } from "ui";
-import { useTheme } from "hooks";
+import { useUserPreferences } from "hooks";
 import { Header } from "components";
 
 const GlobalStyle = createGlobalStyle`
@@ -31,7 +31,7 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const Layout = ({ children }) => {
-  const { theme } = useTheme();
+  const { theme } = useUserPreferences();
   const selectedTheme = theme === "light" ? lightTheme : darkTheme;
 
   return (

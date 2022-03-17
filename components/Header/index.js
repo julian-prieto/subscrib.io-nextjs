@@ -1,4 +1,4 @@
-import { useTheme, useAuth } from "hooks";
+import { useUserPreferences, useAuth } from "hooks";
 import Link from "next/link";
 import styled from "styled-components";
 import { Button, Flex, Container } from "ui";
@@ -15,7 +15,7 @@ const Title = styled.h1`
 `;
 
 const Header = () => {
-  const { theme, toggleTheme } = useTheme();
+  const { theme, toggleTheme } = useUserPreferences();
   const { user } = useAuth();
 
   return (

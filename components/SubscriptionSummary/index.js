@@ -1,14 +1,16 @@
 import { useQuery } from "@apollo/client";
 import { GET_SUBSCRIPTIONS } from "graphql/queries";
-import { useAuth } from "hooks";
-import { useCallback, useMemo } from "react";
+import { useAuth, useUserPreferences } from "hooks";
+import { useMemo } from "react";
 import { round } from "utils";
 // import {  } from "./styled";
 
-const SubscriptionSummary = ({ convertToCurrency }) => {
+const SubscriptionSummary = () => {
   const { user } = useAuth();
+  const { preferredCurrency } = useUserPreferences();
+
   const { data: dataQuery, loading: loadingQuery } = useQuery(GET_SUBSCRIPTIONS, {
-    variables: { convertToCurrency },
+    variables: { convertToCurrency: preferredCurrency },
     skip: !user,
   });
 
