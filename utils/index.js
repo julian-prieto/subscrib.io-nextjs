@@ -14,6 +14,11 @@ const CARD_TYPES = {
 
 export const EMPTY_FIELD = "----------";
 
+export const SUMMARY_VIEWS = {
+  DEFAULT: "DEFAULT",
+  UNKNOWN: "UNKNOWN",
+};
+
 export const getUserToken = () => localStorage.getItem("token");
 
 export const setUserToken = (token) => localStorage.setItem("token", token);
@@ -103,5 +108,15 @@ export const sumBy = (objects, costFrequency) => {
       ...prev,
       [currGroup]: sumBy(currValue, costFrequency),
     };
+  }, {});
+};
+
+export const getCreditCardsFromSubscriptionList = (subscriptions = []) => {
+  return subscriptions.reduce((prev, curr) => {
+    const creditCardID = curr.creditCard
+      ? `${curr.creditCard.number}_${curr.creditCard.type}`
+      : "NO_CREDITCARD";
+
+    return { ...prev, [creditCardID]: curr.creditCard };
   }, {});
 };

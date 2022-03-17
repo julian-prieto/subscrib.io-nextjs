@@ -175,6 +175,16 @@ export const lightTheme = {
       background: colors.lighter,
       hoverBackground: withOpacity(5, colors.dark),
     },
+    summary: {
+      item: {
+        background: colors.light,
+      },
+      creditCard: {
+        defaultBackground: colors.dark,
+        defaultNumberBackground: colors.dark,
+        color: colors.lighter,
+      },
+    },
   },
 };
 
@@ -283,6 +293,16 @@ export const darkTheme = {
       backdropBackground: withOpacity(80, colors.darker),
       background: colors.dark,
       hoverBackground: withOpacity(10, colors.darker),
+    },
+    summary: {
+      item: {
+        background: colors.darker,
+      },
+      creditCard: {
+        defaultBackground: colors.lighter,
+        defaultNumberBackground: colors.dark,
+        color: colors.darker,
+      },
     },
   },
 };
