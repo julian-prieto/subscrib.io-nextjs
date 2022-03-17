@@ -31,9 +31,16 @@ const SubscriptionCard = ({ subscription }) => {
   const handleDestroySubscription = () => {
     deleteSubscription({
       variables: { id },
-      update: (cache, { data: { deleteSubscriptionById } }) => {
+      update: (
+        cache,
+        {
+          data: {
+            deleteSubscriptionById: { id, currency },
+          },
+        }
+      ) => {
         try {
-          const normalizedId = cache.identify({ id: deleteSubscriptionById.id, __typename: "Subscription" });
+          const normalizedId = cache.identify({ id, currency, __typename: "Subscription" });
           cache.evict({ id: normalizedId });
           cache.gc();
         } catch (error) {

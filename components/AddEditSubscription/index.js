@@ -7,8 +7,11 @@ import { Button, Input } from "ui";
 import { Wrapper, Actions, Form } from "./styled";
 import { EMPTY_FIELD, FREQUENCIES, getDirtyValues } from "utils";
 import { Dropdown } from "components";
+import { useUserPreferences } from "hooks";
 
 const AddEditSubscription = ({ subscription, onClose }) => {
+  const { preferredCurrency } = useUserPreferences();
+
   const { data: dataQuery } = useQuery(GET_SUBSCRIPTION_ASSETS);
   const [
     editSubscription,
@@ -53,33 +56,20 @@ const AddEditSubscription = ({ subscription, onClose }) => {
     if (subscription) {
       editSubscription({
         variables: { id: subscription.id, ...getDirtyValues(variables, dirtyFields) },
-        update: (cache, { data: { updateSubscriptionById } }) => {
-          try {
-            const { subscriptions } = cache.readQuery({ query: GET_SUBSCRIPTIONS });
-            cache.writeQuery({
-              query: GET_SUBSCRIPTIONS,
-              data: {
-                subscriptions: subscriptions.map((sub) => {
-                  if (sub.id === updateSubscriptionById.id) {
-                    return updateSubscriptionById;
-                  }
-                  return sub;
-                }),
-              },
-            });
-          } catch (error) {
-            console.log("Error mutating GQL Cache:", error);
-          }
-        },
       });
     } else {
       createSubscription({
         variables,
         update: (cache, { data: { createSubscription } }) => {
           try {
-            const { subscriptions } = cache.readQuery({ query: GET_SUBSCRIPTIONS });
+            const { subscriptions } = cache.readQuery({
+              query: GET_SUBSCRIPTIONS,
+              variables: { convertToCurrency: preferredCurrency },
+            });
+            console.log({ subscriptions });
             cache.writeQuery({
               query: GET_SUBSCRIPTIONS,
+              variables: { convertToCurrency: preferredCurrency },
               data: {
                 subscriptions: [...subscriptions, createSubscription],
               },
@@ -122,17 +112,6 @@ const AddEditSubscription = ({ subscription, onClose }) => {
           placeholder="e.g. 9.99"
           {...register("price", { required: true, minLength: 1, maxLength: 25 })}
           error={errors.price && <span>This field is required</span>}
-        />
-        <Input
-          label="Currency"
-          labelSize="2xl"
-          placeholder="e.g. USD"
-          {...register("currency", {
-            required: true,
-            minLength: 3,
-            maxLength: 3,
-          })}
-          error={errors.currency && <span>This field is required</span>}
         />
         <Controller
           control={control}
