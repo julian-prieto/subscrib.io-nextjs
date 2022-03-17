@@ -1,3 +1,5 @@
+import { groupBy as _groupBy, sumBy as _sumBy } from "lodash";
+
 export const FREQUENCIES = {
   DAILY: "day",
   MONTHLY: "month",
@@ -52,6 +54,54 @@ export const getDirtyValues = (variables, dirtyFields) => {
   );
 };
 
-export const round = (value, decimals) => {
+export const round = (value, decimals = 2) => {
   return Number(Math.round(value + "e" + decimals) + "e-" + decimals);
+};
+
+export const groupBy = (items, field) => {
+  if (!Array.isArray(items)) {
+    return Object.entries(items).reduce((prev, [currGroup, currValue]) => {
+      return {
+        ...prev,
+        [currGroup]: groupBy(currValue, field),
+      };
+    }, {});
+  }
+  return _groupBy(items, field);
+};
+
+export const getCostByFrequency = (subscription, frequency) => {
+  switch (subscription.frequency) {
+    case "YEARLY":
+      return frequency === "YEARLY"
+        ? subscription.price
+        : frequency === "MONTHLY"
+        ? subscription.price / 12
+        : subscription.price / 365;
+    case "MONTHLY":
+      return frequency === "YEARLY"
+        ? subscription.price * 12
+        : frequency === "MONTHLY"
+        ? subscription.price
+        : subscription.price / 30;
+    case "DAILY":
+      return frequency === "YEARLY"
+        ? subscription.price * 365
+        : frequency === "MONTHLY"
+        ? subscription.price * 30
+        : subscription.price;
+    default:
+      return subscription.price;
+  }
+};
+
+export const sumBy = (objects, costFrequency) => {
+  if (Array.isArray(objects)) return round(_sumBy(objects, (p) => getCostByFrequency(p, costFrequency)));
+
+  return Object.entries(objects).reduce((prev, [currGroup, currValue]) => {
+    return {
+      ...prev,
+      [currGroup]: sumBy(currValue, costFrequency),
+    };
+  }, {});
 };
