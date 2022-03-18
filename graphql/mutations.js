@@ -12,6 +12,7 @@ export const CREATE_SUBSCRIPTION = gql`
     $creditCardId: String
     $tags: [String]
     $image: String
+    $returnCurrency: String
   ) {
     createSubscription(
       title: $title
@@ -21,6 +22,7 @@ export const CREATE_SUBSCRIPTION = gql`
       creditCardId: $creditCardId
       tags: $tags
       image: $image
+      returnCurrency: $returnCurrency
     ) {
       ...SubscriptionParts
     }
@@ -38,6 +40,7 @@ export const UPDATE_SUBSCRIPTION_BY_ID = gql`
     $creditCardId: String
     $tags: [String]
     $image: String
+    $returnCurrency: String
   ) {
     updateSubscriptionById(
       id: $id
@@ -48,6 +51,7 @@ export const UPDATE_SUBSCRIPTION_BY_ID = gql`
       creditCardId: $creditCardId
       tags: $tags
       image: $image
+      returnCurrency: $returnCurrency
     ) {
       ...SubscriptionParts
     }

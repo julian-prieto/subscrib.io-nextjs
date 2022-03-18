@@ -21,7 +21,8 @@ import {
 } from "./styled";
 
 const SubscriptionCard = ({ subscription }) => {
-  const { id, title, creditCard, price, currency, frequency, tags } = subscription;
+  const { id, title, creditCard, price, priceDisplay, currency, currencyDisplay, frequency, tags } =
+    subscription;
 
   const [isEditing, setIsEditing] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -35,13 +36,14 @@ const SubscriptionCard = ({ subscription }) => {
         cache,
         {
           data: {
-            deleteSubscriptionById: { id, currency },
+            deleteSubscriptionById: { id },
           },
         }
       ) => {
         try {
-          const normalizedId = cache.identify({ id, currency, __typename: "Subscription" });
-          cache.evict({ id: normalizedId });
+          const normalizedCache = cache.extract();
+          const cacheIdsToRemove = Object.keys(normalizedCache).filter((key) => key.indexOf(id) !== -1);
+          cacheIdsToRemove.forEach((id) => cache.evict({ id }));
           cache.gc();
         } catch (error) {
           console.log("Error mutating GQL Cache:", error);
@@ -92,7 +94,7 @@ const SubscriptionCard = ({ subscription }) => {
         </Strip>
         <Cost>
           <CostPrice>
-            {price} {currency}
+            {priceDisplay || price} {currencyDisplay || currency}
           </CostPrice>
           <CostFrequency>/ {getFrequency(frequency)}</CostFrequency>
         </Cost>

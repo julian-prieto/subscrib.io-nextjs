@@ -32,9 +32,9 @@ export const graphqlClient = (headerOpts = {}) => {
   return new ApolloClient({
     cache: new InMemoryCache({
       dataIdFromObject: (o) => {
-        const id = defaultDataIdFromObject(o);
+        let id = defaultDataIdFromObject(o);
         if (o.__typename === "Subscription" && id !== null) {
-          return `${id}:${o.currency}`;
+          id = `${id}:${o.currencyDisplay}`;
         }
         return id;
       },

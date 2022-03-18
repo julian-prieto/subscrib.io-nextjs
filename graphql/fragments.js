@@ -45,7 +45,9 @@ export const FRAGMENT_SUBSCRIPTION = gql`
     id
     title
     price
+    priceDisplay
     currency
+    currencyDisplay
     frequency
     image
     creditCard {

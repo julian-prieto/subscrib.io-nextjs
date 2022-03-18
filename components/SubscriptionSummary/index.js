@@ -56,10 +56,6 @@ const SubscriptionSummary = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataQuery, groupedBy, costFrequency]);
 
-  useEffect(() => {
-    console.log("summary:", summary);
-  }, [summary]);
-
   return (
     summary.view === SUMMARY_VIEWS.DEFAULT && (
       <Wrapper>
@@ -98,22 +94,6 @@ const SubscriptionSummary = () => {
       </Wrapper>
     )
   );
-  // return (
-  //   <>
-  //     <select value={groupedBy || EMPTY_FIELD} onChange={(e) => setGroupedBy(e.target.value)}>
-  //       <option value={EMPTY_FIELD}>{EMPTY_FIELD}</option>
-  //       {Object.keys(SUMMARY_GROUP_BY_OPTIONS).map((key) => (
-  //         <option key={key} value={key}>
-  //           {key}
-  //         </option>
-  //       ))}
-  //     </select>
-  //     <pre>{JSON.stringify(summary.data, null, 2)}</pre>
-  //   </>
-  // );
-  {
-    /* DEFAULT VIEW */
-  }
 };
 
 export default SubscriptionSummary;

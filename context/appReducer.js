@@ -1,7 +1,7 @@
 export const INITIAL_STATE = {
   userPreferences: {
     theme: "light",
-    preferredCurrency: null,
+    preferredCurrency: undefined,
   },
 };
 

@@ -31,15 +31,31 @@ export const Strip = styled.div`
 `;
 
 export const Title = styled.div`
+  position: relative;
+  transform: translateX(-0.5rem);
   padding: 0.5rem 1rem 0.5rem;
 
-  border-top-right-radius: 0.25rem;
-  border-bottom-right-radius: 0.25rem;
+  border-radius: 0.25rem;
+  border-top-left-radius: 0;
   background-color: ${(props) => props.theme.colors.subscriptionCard.title.background};
 
   color: ${(props) => props.theme.colors.subscriptionCard.title.color};
   font-size: 1.5rem;
   font-weight: 700;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    border-style: solid;
+    border-width: 0.5rem 0.5rem 0px 0px;
+    border-color: ${(props) => withOpacity(40, props.theme.colors.subscriptionCard.title.background)}
+      transparent transparent transparent;
+
+    transform: translateY(-100%) rotate(180deg);
+  }
 `;
 
 export const CreditCard = styled.div`

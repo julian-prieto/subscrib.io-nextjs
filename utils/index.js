@@ -49,14 +49,17 @@ export const getCreditCardType = (type) => {
   return type.toUpperCase();
 };
 
-export const getDirtyValues = (variables, dirtyFields) => {
-  return Object.keys(dirtyFields).reduce(
-    (acc, current) => ({
-      ...acc,
-      [current]: variables[current] === EMPTY_FIELD ? null : variables[current],
-    }),
-    {}
-  );
+export const getDirtyValues = (variables, dirtyFields, ignoreFields) => {
+  return Object.entries(variables).reduce((prev, [currKey, currValue]) => {
+    if (ignoreFields.indexOf(currKey) === -1 && !dirtyFields[currKey]) {
+      return { ...prev };
+    }
+
+    return {
+      ...prev,
+      [currKey]: currValue === EMPTY_FIELD ? null : currValue,
+    };
+  }, {});
 };
 
 export const round = (value, decimals = 2) => {

@@ -51,11 +51,16 @@ const AddEditSubscription = ({ subscription, onClose }) => {
       frequency: form.frequency,
       creditCardId: form.creditCardId,
       tags: form.tags ? JSON.parse(form.tags) : [],
+      returnCurrency: preferredCurrency,
     };
 
     if (subscription) {
+      const mutationVariables = getDirtyValues(variables, dirtyFields, ["id", "returnCurrency"]);
+      const priceOrCurrencyChanged = mutationVariables.price || mutationVariables.currency;
+
       editSubscription({
-        variables: { id: subscription.id, ...getDirtyValues(variables, dirtyFields) },
+        variables: mutationVariables,
+        refetchQueries: priceOrCurrencyChanged && ["GetSubscriptions"],
       });
     } else {
       createSubscription({
@@ -66,7 +71,6 @@ const AddEditSubscription = ({ subscription, onClose }) => {
               query: GET_SUBSCRIPTIONS,
               variables: { convertToCurrency: preferredCurrency },
             });
-            console.log({ subscriptions });
             cache.writeQuery({
               query: GET_SUBSCRIPTIONS,
               variables: { convertToCurrency: preferredCurrency },
