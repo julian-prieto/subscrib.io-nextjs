@@ -2,10 +2,6 @@ import styled from "styled-components";
 import { getContrastColor, withOpacity } from "ui";
 
 export const Wrapper = styled.div`
-  /* position: fixed;
-  bottom: 0;
-  left: 0; */
-
   width: 100%;
 
   display: flex;
@@ -23,6 +19,10 @@ export const Wrapper = styled.div`
   border-bottom-right-radius: 0;
   background-color: ${(props) => props.theme.colors.card.background};
   box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.1);
+`;
+
+export const H1 = styled.h1`
+  margin: 0px;
 `;
 
 export const Item = styled.div`

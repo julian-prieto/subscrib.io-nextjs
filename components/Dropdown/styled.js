@@ -14,6 +14,7 @@ const LABEL_SIZES = {
 export const Wrapper = styled.div`
   position: relative;
   display: flex;
+  flex-direction: ${(props) => props.reverse && "row-reverse"};
 
   border: none;
   border-radius: 0.25rem;
@@ -41,6 +42,7 @@ export const Select = styled.div`
   position: relative;
   display: flex;
   align-items: stretch;
+  flex-direction: ${(props) => props.reverse && "row-reverse"};
 
   flex: 1;
 `;
@@ -50,9 +52,11 @@ export const SelectItem = styled.div`
   align-items: center;
   flex: 1;
 
-  padding: 0 0.5rem;
+  padding: ${(props) => (props.selected ? "0.5rem 1rem" : "0 0.5rem")};
 
   cursor: pointer;
+
+  user-select: none;
 `;
 
 export const SelectIcon = styled.div`
@@ -64,7 +68,7 @@ export const SelectIcon = styled.div`
   ${(props) =>
     props.isOpen &&
     css`
-      transform: rotate(180deg);
+      transform: ${(props) => (props.reverse ? "rotate(-180deg)" : "rotate(180deg)")};
     `};
 `;
 
@@ -72,6 +76,7 @@ export const SelectMenu = styled.div`
   display: ${(props) => (props.isOpen ? "flex" : "none")};
   flex-direction: column;
   gap: 0.25rem;
+  align-items: ${(props) => props.reverse && "flex-end"};
 
   position: absolute;
   top: 100%;

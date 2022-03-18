@@ -10,7 +10,8 @@ import {
   sumBy,
   SUMMARY_VIEWS,
 } from "utils";
-import { Wrapper, Item, CreditCard, CreditCardType, CreditCardNumber, ItemContent } from "./styled";
+import { Wrapper, Item, CreditCard, CreditCardType, CreditCardNumber, ItemContent, H1 } from "./styled";
+import { Dropdown } from "components";
 
 const SUMMARY_GROUP_BY_OPTIONS = {
   Currency: "currency",
@@ -59,12 +60,22 @@ const SubscriptionSummary = () => {
   return (
     summary.view === SUMMARY_VIEWS.DEFAULT && (
       <Wrapper>
-        <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: "1rem" }}>
-          <select value={costFrequency} onChange={(e) => setCostFrequency(e.target.value)}>
-            <option value="DAILY">DAILY</option>
-            <option value="MONTHLY">MONTHLY</option>
-            <option value="YEARLY">YEARLY</option>
-          </select>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            marginBottom: "1rem",
+          }}
+        >
+          <H1>Summary</H1>
+          <Dropdown
+            labelSize="4xl"
+            options={["DAILY", "MONTHLY", "YEARLY"]}
+            value={costFrequency}
+            onChange={(v) => setCostFrequency(v)}
+            renderOption={(option) => option}
+          />
         </div>
         {Object.entries(summary.data)
           .sort((a) => (a[0] === "NO_CREDITCARD" ? 1 : -1))
