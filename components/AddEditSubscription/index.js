@@ -56,16 +56,38 @@ const AddEditSubscription = ({ subscription, onClose }) => {
 
     if (subscription) {
       const mutationVariables = getDirtyValues(variables, dirtyFields, ["id", "returnCurrency"]);
-      const priceOrCurrencyChanged = mutationVariables.price || mutationVariables.currency;
 
       editSubscription({
         variables: mutationVariables,
-        refetchQueries: priceOrCurrencyChanged && ["GetSubscriptions"],
+        update: (
+          cache,
+          {
+            data: {
+              updateSubscriptionById: { id, currencyDisplay },
+            },
+          }
+        ) => {
+          const normalizedCache = cache.extract();
+          const cacheIdsToRemove = Object.keys(normalizedCache).filter(
+            (key) => key.indexOf(id) !== -1 && key.indexOf(currencyDisplay) === -1
+          );
+          cacheIdsToRemove
+            .map((a) => a.split(":")[2])
+            .map((b) => (b === "null" ? null : b))
+            .forEach((param) => {
+              cache.evict({
+                id: "ROOT_QUERY",
+                fieldName: "subscriptions",
+                args: { convertToCurrency: param },
+              });
+            });
+        },
       });
     } else {
       createSubscription({
         variables,
         update: (cache, { data: { createSubscription } }) => {
+          window.APOLLO_CACHE = cache;
           try {
             const { subscriptions } = cache.readQuery({
               query: GET_SUBSCRIPTIONS,
@@ -77,6 +99,23 @@ const AddEditSubscription = ({ subscription, onClose }) => {
               data: {
                 subscriptions: [...subscriptions, createSubscription],
               },
+            });
+            const normalizedCache = cache.extract();
+
+            const cacheIdsToRemove = Object.keys(normalizedCache)
+              .filter((key) => key.includes("Subscription"))
+              .reduce((p, a) => {
+                const [, , currency] = a.split(":");
+                const preferencesCurrency = `${preferredCurrency}`;
+                return p.includes(currency) ? p : currency === preferencesCurrency ? p : [...p, currency];
+              }, []);
+
+            cacheIdsToRemove.forEach((param) => {
+              cache.evict({
+                id: "ROOT_QUERY",
+                fieldName: "subscriptions",
+                args: { convertToCurrency: param === "null" ? null : param },
+              });
             });
           } catch (error) {
             console.log("Error mutating GQL Cache:", error);

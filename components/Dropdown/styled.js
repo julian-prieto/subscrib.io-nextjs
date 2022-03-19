@@ -19,6 +19,8 @@ export const Wrapper = styled.div`
   border: none;
   border-radius: 0.25rem;
 
+  font-size: 0.875rem;
+
   background-color: ${(props) => props.theme.colors.select.background};
 
   outline: ${(props) => (props.isOpen ? `1px solid ${props.theme.colors.select.outline}` : "none")};

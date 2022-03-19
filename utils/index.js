@@ -16,6 +16,7 @@ export const EMPTY_FIELD = "----------";
 
 export const SUMMARY_VIEWS = {
   DEFAULT: "DEFAULT",
+  PREFERENCES_CURRENCY_SELECTED: "PREFERENCES_CURRENCY_SELECTED",
   UNKNOWN: "UNKNOWN",
 };
 
@@ -78,38 +79,39 @@ export const groupBy = (items, field) => {
   return _groupBy(items, field);
 };
 
-export const getCostByFrequency = (subscription, frequency) => {
+export const getCostByFrequency = (subscription, priceField, frequency) => {
   switch (subscription.frequency) {
     case "YEARLY":
       return frequency === "YEARLY"
-        ? subscription.price
+        ? subscription[priceField]
         : frequency === "MONTHLY"
-        ? subscription.price / 12
-        : subscription.price / 365;
+        ? subscription[priceField] / 12
+        : subscription[priceField] / 365;
     case "MONTHLY":
       return frequency === "YEARLY"
-        ? subscription.price * 12
+        ? subscription[priceField] * 12
         : frequency === "MONTHLY"
-        ? subscription.price
-        : subscription.price / 30;
+        ? subscription[priceField]
+        : subscription[priceField] / 30;
     case "DAILY":
       return frequency === "YEARLY"
-        ? subscription.price * 365
+        ? subscription[priceField] * 365
         : frequency === "MONTHLY"
-        ? subscription.price * 30
-        : subscription.price;
+        ? subscription[priceField] * 30
+        : subscription[priceField];
     default:
-      return subscription.price;
+      return subscription[priceField];
   }
 };
 
-export const sumBy = (objects, costFrequency) => {
-  if (Array.isArray(objects)) return round(_sumBy(objects, (p) => getCostByFrequency(p, costFrequency)));
+export const sumBy = (objects, costFrequency, priceField = "price") => {
+  if (Array.isArray(objects))
+    return round(_sumBy(objects, (p) => getCostByFrequency(p, priceField, costFrequency)));
 
   return Object.entries(objects).reduce((prev, [currGroup, currValue]) => {
     return {
       ...prev,
-      [currGroup]: sumBy(currValue, costFrequency),
+      [currGroup]: sumBy(currValue, costFrequency, priceField),
     };
   }, {});
 };

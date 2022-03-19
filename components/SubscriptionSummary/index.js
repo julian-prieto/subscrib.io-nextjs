@@ -14,8 +14,10 @@ import { Wrapper, Item, CreditCard, CreditCardType, CreditCardNumber, ItemConten
 import { Dropdown } from "components";
 
 const SUMMARY_GROUP_BY_OPTIONS = {
-  Currency: "currency",
-  "Credit Card": (s) => (s?.creditCard?.id ? `${s.creditCard.number}_${s.creditCard.type}` : "NO_CREDITCARD"),
+  BY_CURRENCY: "currency",
+  BY_PREFERENCES_CURRENCY: "currencyDisplay",
+  BY_CREDIT_CARD: (s) =>
+    s?.creditCard?.id ? `${s.creditCard.number}_${s.creditCard.type}` : "NO_CREDITCARD",
 };
 
 const SubscriptionSummary = () => {
@@ -29,19 +31,39 @@ const SubscriptionSummary = () => {
     skip: !user,
   });
 
-  const NO_SUBSCRIPTIONS_DATA = !dataQuery?.subscriptions?.length;
-  const NO_GROUP_BY_DEFINED = !groupedBy || groupedBy === EMPTY_FIELD;
-  const NO_PREFERRED_CURRENCY_DEFINED = !groupedBy || groupedBy === EMPTY_FIELD;
+  const SUBSCRIPTIONS_DATA = !!dataQuery?.subscriptions?.length;
+  const GROUP_BY_DEFINED = groupedBy && groupedBy !== EMPTY_FIELD;
+  const PREFERRED_CURRENCY_DEFINED = !!preferredCurrency;
 
   const summary = useMemo(() => {
-    if (NO_SUBSCRIPTIONS_DATA) return { view: SUMMARY_VIEWS.UNKNOWN, data: null };
+    if (!SUBSCRIPTIONS_DATA) return { view: SUMMARY_VIEWS.UNKNOWN, data: null };
 
-    if (NO_GROUP_BY_DEFINED && NO_PREFERRED_CURRENCY_DEFINED) {
+    if (!GROUP_BY_DEFINED && PREFERRED_CURRENCY_DEFINED) {
       const groupByCreditCard = groupBy(
-        groupBy(dataQuery.subscriptions, SUMMARY_GROUP_BY_OPTIONS["Credit Card"]),
-        SUMMARY_GROUP_BY_OPTIONS.Currency
+        groupBy(dataQuery.subscriptions, SUMMARY_GROUP_BY_OPTIONS.BY_CREDIT_CARD),
+        SUMMARY_GROUP_BY_OPTIONS.BY_PREFERENCES_CURRENCY
       );
-      const costByGroup = sumBy(groupByCreditCard, costFrequency);
+      const costByGroup = sumBy(groupByCreditCard, costFrequency, "priceDisplay");
+
+      return {
+        view: SUMMARY_VIEWS.PREFERENCES_CURRENCY_SELECTED,
+        creditCardMap: getCreditCardsFromSubscriptionList(dataQuery.subscriptions),
+        data: costByGroup,
+        subs: dataQuery.subscriptions.map((s) => ({
+          currency: s.currency,
+          price: s.price,
+          currencyDisplay: s.currencyDisplay,
+          priceDisplay: s.priceDisplay,
+        })),
+      };
+    }
+
+    if (!GROUP_BY_DEFINED) {
+      const groupByCreditCardAndCurrency = groupBy(
+        groupBy(dataQuery.subscriptions, SUMMARY_GROUP_BY_OPTIONS.BY_CREDIT_CARD),
+        SUMMARY_GROUP_BY_OPTIONS.BY_CURRENCY
+      );
+      const costByGroup = sumBy(groupByCreditCardAndCurrency, costFrequency);
 
       return {
         view: SUMMARY_VIEWS.DEFAULT,
@@ -58,7 +80,7 @@ const SubscriptionSummary = () => {
   }, [dataQuery, groupedBy, costFrequency]);
 
   return (
-    summary.view === SUMMARY_VIEWS.DEFAULT && (
+    summary.view !== SUMMARY_VIEWS.UNKNOWN && (
       <Wrapper>
         <div
           style={{

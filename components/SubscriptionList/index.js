@@ -14,7 +14,7 @@ const SubscriptionList = () => {
 
   const handleChangeCurrency = (value) => {
     if (value === EMPTY_FIELD) {
-      setPreferredCurrency();
+      setPreferredCurrency(null);
       return;
     }
     setPreferredCurrency(value);
