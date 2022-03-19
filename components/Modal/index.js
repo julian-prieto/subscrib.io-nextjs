@@ -11,14 +11,23 @@ import {
   ModalActions,
 } from "./styled";
 
-const Modal = ({ isOpen, onClose, content, confirmation, onConfirm, onCancel, type }) => {
+const Modal = ({
+  isOpen,
+  onClose,
+  content,
+  confirmation,
+  onConfirm,
+  onCancel,
+  closeOnClickOutside = false,
+  type,
+}) => {
   if (!isOpen) {
     return null;
   }
 
   return confirmation ? (
     <Wrapper>
-      <Backdrop onClick={onCancel} />
+      <Backdrop onClick={closeOnClickOutside ? onCancel : null} />
       <ModalElement>
         <ModalHeader>{content.title}</ModalHeader>
         <ModalBody>{content.message}</ModalBody>
@@ -34,7 +43,7 @@ const Modal = ({ isOpen, onClose, content, confirmation, onConfirm, onCancel, ty
     </Wrapper>
   ) : (
     <Wrapper>
-      <Backdrop onClick={onClose} />
+      <Backdrop onClick={closeOnClickOutside ? onCancel : null} />
       <ModalElement>
         <ModalHeader>
           <ModalTitle>{content.title}</ModalTitle>
