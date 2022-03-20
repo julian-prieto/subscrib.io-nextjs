@@ -4,7 +4,7 @@ import { FaPlus } from "react-icons/fa";
 import { GET_SUBSCRIPTIONS } from "graphql/queries";
 import { useAuth, useUserPreferences } from "hooks";
 import { SubscriptionCard, Modal, AddEditSubscription, Dropdown } from "components";
-import { Header, H1, AddIcon, Grid } from "./styled";
+import { Header, H1, H2, AddIcon, Grid } from "./styled";
 import { EMPTY_FIELD } from "utils";
 
 const SubscriptionList = () => {
@@ -26,9 +26,10 @@ const SubscriptionList = () => {
   });
 
   const CREATE_MODAL = {
-    title: <span>Create Subscription</span>,
+    title: <H2>Create Subscription</H2>,
     body: <AddEditSubscription onClose={() => setIsCreating(false)} />,
   };
+
   return (
     <>
       <Header>
@@ -63,7 +64,12 @@ const SubscriptionList = () => {
           No subscriptions in your account yet. Start creating some using the + icon on the top right side!
         </div>
       )}
-      <Modal isOpen={isCreating} onClose={() => setIsCreating(false)} content={CREATE_MODAL} />
+      <Modal
+        maxWidth="32rem"
+        isOpen={isCreating}
+        onClose={() => setIsCreating(false)}
+        content={CREATE_MODAL}
+      />
     </>
   );
 };

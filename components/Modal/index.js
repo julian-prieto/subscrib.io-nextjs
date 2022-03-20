@@ -20,38 +20,40 @@ const Modal = ({
   onCancel,
   closeOnClickOutside = false,
   type,
+  maxWidth,
 }) => {
   if (!isOpen) {
     return null;
   }
 
-  return confirmation ? (
+  return (
     <Wrapper>
       <Backdrop onClick={closeOnClickOutside ? onCancel : null} />
-      <ModalElement>
-        <ModalHeader>{content.title}</ModalHeader>
-        <ModalBody>{content.message}</ModalBody>
-        <ModalActions>
-          <Button color="secondary" onClick={onCancel}>
-            {content.cancel}
-          </Button>
-          <Button color={type} onClick={onConfirm}>
-            {content.confirm}
-          </Button>
-        </ModalActions>
-      </ModalElement>
-    </Wrapper>
-  ) : (
-    <Wrapper>
-      <Backdrop onClick={closeOnClickOutside ? onCancel : null} />
-      <ModalElement>
-        <ModalHeader>
-          <ModalTitle>{content.title}</ModalTitle>
-          <ModalClose onClick={onClose}>
-            <IoClose />
-          </ModalClose>
-        </ModalHeader>
-        {content.body}
+      <ModalElement maxWidth={maxWidth}>
+        {confirmation ? (
+          <>
+            <ModalHeader>{content.title}</ModalHeader>
+            <ModalBody>{content.message}</ModalBody>
+            <ModalActions>
+              <Button color="secondary" onClick={onCancel}>
+                {content.cancel}
+              </Button>
+              <Button color={type} onClick={onConfirm}>
+                {content.confirm}
+              </Button>
+            </ModalActions>
+          </>
+        ) : (
+          <>
+            <ModalHeader>
+              <ModalTitle>{content.title}</ModalTitle>
+              <ModalClose onClick={onClose}>
+                <IoClose />
+              </ModalClose>
+            </ModalHeader>
+            {content.body}
+          </>
+        )}
       </ModalElement>
     </Wrapper>
   );

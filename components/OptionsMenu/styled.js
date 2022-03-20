@@ -63,6 +63,7 @@ export const Menu = styled.div`
   border-top-right-radius: 0;
 
   background-color: ${(props) => props.theme.colors.optionsMenu.menu.background};
+  color: ${(props) => props.theme.colors.optionsMenu.menu.color};
 `;
 
 export const MenuItem = styled.div`

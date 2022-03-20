@@ -8,11 +8,12 @@ import { Wrapper, Actions, Form } from "./styled";
 import { EMPTY_FIELD, FREQUENCIES, getDirtyValues } from "utils";
 import { Dropdown } from "components";
 import { useUserPreferences } from "hooks";
+import ManageTags from "./ManageTags";
 
 const AddEditSubscription = ({ subscription, onClose }) => {
   const { preferredCurrency } = useUserPreferences();
 
-  const { data: dataQuery } = useQuery(GET_SUBSCRIPTION_ASSETS);
+  const { data: dataQuery, loading: loadingQuery } = useQuery(GET_SUBSCRIPTION_ASSETS);
   const [
     editSubscription,
     { data: dataEditMutation, loading: loadingEditMutation, called: calledEditMutation },
@@ -167,6 +168,7 @@ const AddEditSubscription = ({ subscription, onClose }) => {
               value={value}
               onChange={onChange}
               renderOption={(option) => `[${option.id}] - ${option.name}`}
+              loading={loadingQuery}
             />
           )}
         />
@@ -196,16 +198,23 @@ const AddEditSubscription = ({ subscription, onClose }) => {
               onChange={onChange}
               allowEmptyValue
               renderOption={(option) => `${option.type} [${option.number}]`}
+              loading={loadingQuery}
             />
           )}
         />
-        <Input
-          label="Tags"
-          labelSize="2xl"
-          {...register("tags", {
-            required: false,
-          })}
-          error={errors.name && "This field is required"}
+        <Controller
+          control={control}
+          name="tags"
+          render={({ field: { onChange, value } }) => {
+            const tagIds = (value && JSON.parse(value)) || [];
+            const tags = tagIds.reduce((prev, curr) => {
+              const tag = dataQuery?.tags?.find((t) => t.id === curr);
+              if (tag) return [...prev, tag];
+              return prev;
+            }, []);
+
+            return <ManageTags tags={tags} onChange={onChange} />;
+          }}
         />
         <Actions>
           <Button type="button" color="secondary" onClick={onClose}>

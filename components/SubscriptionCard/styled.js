@@ -111,6 +111,7 @@ export const CostFrequency = styled.div`
 export const Tags = styled.div`
   display: flex;
   justify-content: flex-end;
+  flex-wrap: wrap;
   gap: 0.25rem;
   padding: 1rem;
 `;
@@ -131,4 +132,13 @@ export const LoadingOverlay = styled.div`
 
   border-radius: 0.75rem;
   background: ${(props) => props.theme.colors.subscriptionCard.background};
+`;
+
+export const H2 = styled.h2`
+  margin: 0px;
+  margin-bottom: 1rem;
+`;
+
+export const ModalMessage = styled.div`
+  padding-bottom: 1rem;
 `;

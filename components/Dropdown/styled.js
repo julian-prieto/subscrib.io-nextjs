@@ -64,7 +64,7 @@ export const SelectItem = styled.div`
 export const SelectIcon = styled.div`
   display: flex;
   align-items: center;
-  padding: 0 0.5rem;
+  padding: 0 1rem;
   transition: transform 0.2s ease-in;
   transform: rotate(0);
   ${(props) =>

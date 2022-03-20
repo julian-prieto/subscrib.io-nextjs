@@ -35,7 +35,8 @@ export const StyledButton = styled.button`
       background-color: transparent;
 
       &:hover {
-        background-color: ${(props) => withOpacity(20, props.theme.colors.button[props.color].backgroundHover)};
+        background-color: ${(props) =>
+          withOpacity(20, props.theme.colors.button[props.color].backgroundHover)};
       }
 
       &:disabled {
@@ -43,6 +44,12 @@ export const StyledButton = styled.button`
         border: 1px solid ${props.theme.colors.button[props.color].backgroundDisabled};
         color: ${props.theme.colors.button[props.color].backgroundDisabled};
       }
+    `}
+
+  ${(props) =>
+    props.xs &&
+    css`
+      padding: 0 0.75rem;
     `}
 `;
 

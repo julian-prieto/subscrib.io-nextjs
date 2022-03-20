@@ -13,6 +13,7 @@ const LABEL_SIZES = {
 
 export const Field = styled.div`
   display: flex;
+  flex: 1;
 
   border: none;
   border-radius: 0.25rem;
@@ -40,6 +41,7 @@ export const StyledLabel = styled.label`
 
 export const StyledInput = styled.input`
   flex: 1;
+  width: 100%;
 
   padding: 0.25rem 0.5rem;
 

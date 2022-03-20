@@ -33,6 +33,7 @@ export const ModalElement = styled.div`
   @media ${(props) => props.theme.devices.sm} {
     width: unset;
     min-width: 32rem;
+    max-width: ${(props) => props.maxWidth && props.maxWidth};
   }
 
   position: relative;

@@ -120,6 +120,10 @@ export const lightTheme = {
       color: colors.darker,
       outline: withOpacity(75, colors.darker),
     },
+    checkbox: {
+      uncheckedBackground: colors.light,
+      checkedBackground: colors.secondary,
+    },
     collapse: {
       background: colors.light,
       color: colors.darker,
@@ -238,6 +242,10 @@ export const darkTheme = {
       labelBackground: withOpacity(5, colors.lighter),
       color: colors.lighter,
       outline: withOpacity(25, colors.lighter),
+    },
+    checkbox: {
+      uncheckedBackground: colors.light,
+      checkedBackground: colors.secondary,
     },
     collapse: {
       background: colors.darker,

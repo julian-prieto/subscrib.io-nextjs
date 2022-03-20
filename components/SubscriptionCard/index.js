@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { DELETE_SUBSCRIPTION_BY_ID } from "graphql/mutations";
-import { GET_SUBSCRIPTIONS } from "graphql/queries";
 import { FaTrash, FaPen } from "react-icons/fa";
 import { Tag, OptionsMenu, Modal, AddEditSubscription } from "components";
 import { getCreditCardType, getFrequency } from "utils";
@@ -18,6 +17,8 @@ import {
   Tags,
   OptionsWrapper,
   LoadingOverlay,
+  H2,
+  ModalMessage,
 } from "./styled";
 
 const SubscriptionCard = ({ subscription }) => {
@@ -60,16 +61,20 @@ const SubscriptionCard = ({ subscription }) => {
 
   const EDIT_MODAL = {
     title: (
-      <span>
+      <H2>
         Edit <i>{title}</i>
-      </span>
+      </H2>
     ),
     body: <AddEditSubscription subscription={subscription} onClose={() => setIsEditing(false)} />,
   };
 
   const REMOVE_MODAL = {
-    title: `Remove: ${subscription.title}`,
-    message: "Are you sure you want to remove this subscription?",
+    title: <H2>Remove</H2>,
+    message: (
+      <ModalMessage>
+        Are you sure you want to remove the <strong>{subscription.title}</strong> subscription?
+      </ModalMessage>
+    ),
     confirm: "REMOVE",
     cancel: "CANCEL",
   };

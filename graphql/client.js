@@ -31,6 +31,18 @@ export const graphqlClient = (headerOpts = {}) => {
 
   return new ApolloClient({
     cache: new InMemoryCache({
+      // typePolicies: {
+      //   Subscription: {
+      //     fields: {
+      //       tags: {
+      //         merge: (existing, incoming, { mergeObjects }) => {
+      //           console.log({ existing, incoming });
+      //           return incoming;
+      //         },
+      //       },
+      //     },
+      //   },
+      // },
       dataIdFromObject: (o) => {
         let id = defaultDataIdFromObject(o);
         if (o.__typename === "Subscription" && id !== null) {
