@@ -54,7 +54,7 @@ export const SelectItem = styled.div`
   align-items: center;
   flex: 1;
 
-  padding: ${(props) => (props.selected ? "0.5rem 1rem" : "0 0.5rem")};
+  padding: ${(props) => (props.selected ? "0.5rem 0.5rem" : "0 0.5rem")};
 
   cursor: pointer;
 

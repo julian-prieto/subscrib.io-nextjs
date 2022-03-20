@@ -145,14 +145,14 @@ const AddEditSubscription = ({ subscription, onClose }) => {
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Input
           label="Title"
-          labelSize="2xl"
+          labelSize="xl"
           placeholder="e.g. Netflix"
           {...register("title", { required: true, minLength: 2, maxLength: 25 })}
           error={errors.title && <span>This field is required</span>}
         />
         <Input
           label="Price"
-          labelSize="2xl"
+          labelSize="xl"
           placeholder="e.g. 9.99"
           type="number"
           {...register("price", {
@@ -176,7 +176,7 @@ const AddEditSubscription = ({ subscription, onClose }) => {
           }}
           render={({ field: { onChange, value } }) => (
             <Dropdown
-              labelSize="2xl"
+              labelSize="xl"
               label="Currency"
               options={dataQuery?.currencies}
               value={value}
@@ -193,7 +193,7 @@ const AddEditSubscription = ({ subscription, onClose }) => {
           name="frequency"
           render={({ field: { onChange, value } }) => (
             <Dropdown
-              labelSize="2xl"
+              labelSize="xl"
               label="Frequency"
               options={Object.keys(FREQUENCIES).map((freq) => freq)}
               value={value}
@@ -207,7 +207,7 @@ const AddEditSubscription = ({ subscription, onClose }) => {
           name="creditCardId"
           render={({ field: { onChange, value } }) => (
             <Dropdown
-              labelSize="2xl"
+              labelSize="xl"
               label="Credit Card"
               options={dataQuery?.creditCards}
               value={value}

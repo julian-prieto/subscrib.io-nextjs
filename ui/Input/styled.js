@@ -28,6 +28,8 @@ export const Field = styled.div`
 export const StyledLabel = styled.label`
   padding: 0.5rem 1rem;
 
+  font-size: 0.875rem;
+
   ${(props) =>
     props.labelSize &&
     css`

@@ -27,8 +27,8 @@ export const Backdrop = styled.div`
 `;
 
 export const ModalElement = styled.div`
-  width: 100%;
-  height: 100%;
+  width: ${(props) => (props.isConfirmation ? "calc(100% - 1.5rem)" : "100%")};
+  height: ${(props) => (props.isConfirmation ? "unset" : "100%")};
 
   padding: 1rem;
 

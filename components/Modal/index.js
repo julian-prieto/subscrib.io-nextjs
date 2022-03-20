@@ -38,7 +38,7 @@ const Modal = ({
   return (
     <Wrapper>
       <Backdrop onClick={closeOnClickOutside ? onCancel : null} />
-      <ModalElement maxWidth={maxWidth}>
+      <ModalElement maxWidth={maxWidth} isConfirmation={confirmation}>
         {confirmation ? (
           <>
             <ModalHeader>{content.title}</ModalHeader>
