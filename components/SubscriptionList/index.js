@@ -50,6 +50,7 @@ const SubscriptionList = () => {
               value={preferredCurrency}
               onChange={handleChangeCurrency}
               renderOption={(option) => option}
+              placeholder="default"
               allowEmptyValue
             />
           </div>

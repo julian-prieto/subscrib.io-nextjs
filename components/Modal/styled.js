@@ -27,11 +27,14 @@ export const Backdrop = styled.div`
 `;
 
 export const ModalElement = styled.div`
-  width: calc(100% - 1.5rem);
+  width: 100%;
+  height: 100%;
+
   padding: 1rem;
 
   @media ${(props) => props.theme.devices.sm} {
     width: unset;
+    height: unset;
     min-width: 32rem;
     max-width: ${(props) => props.maxWidth && props.maxWidth};
   }
@@ -53,16 +56,21 @@ export const ModalTitle = styled.div`
   flex: 1;
   margin-top: 1.5rem;
 `;
+
 export const ModalClose = styled.div`
   display: flex;
   align-items: center;
 
   padding: 0.25rem;
 
-  font-size: 1.25rem;
+  font-size: 2rem;
 
   cursor: pointer;
   border-radius: 50%;
+
+  @media ${(props) => props.theme.devices.sm} {
+    font-size: 1.25rem;
+  }
 
   &:hover {
     background-color: ${(props) => props.theme.colors.modal.hoverBackground};

@@ -69,6 +69,16 @@ export const StyledInput = styled.input`
   &:-webkit-autofill {
     -webkit-text-fill-color: ${(props) => props.theme.colors.input.color} !important;
   }
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  &[type="number"] {
+    -moz-appearance: textfield;
+  }
 `;
 
 export const ErrorMessage = styled.div`

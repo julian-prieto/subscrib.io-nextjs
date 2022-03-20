@@ -154,12 +154,26 @@ const AddEditSubscription = ({ subscription, onClose }) => {
           label="Price"
           labelSize="2xl"
           placeholder="e.g. 9.99"
-          {...register("price", { required: true, minLength: 1, maxLength: 25 })}
-          error={errors.price && <span>This field is required</span>}
+          type="number"
+          {...register("price", {
+            required: { value: true, message: "Price is required" },
+            minLength: { value: 1, message: "Price length is too short" },
+            maxLength: { value: 25, message: "Price length is too long" },
+            validate: {
+              isPositiveNumber: (value) => value > 0 || "Price should be at least zero",
+            },
+          })}
+          error={errors.price && errors?.price?.message}
         />
         <Controller
           control={control}
           name="currency"
+          rules={{
+            required: {
+              value: true,
+              message: "Please select a currency",
+            },
+          }}
           render={({ field: { onChange, value } }) => (
             <Dropdown
               labelSize="2xl"
@@ -169,6 +183,8 @@ const AddEditSubscription = ({ subscription, onClose }) => {
               onChange={onChange}
               renderOption={(option) => `[${option.id}] - ${option.name}`}
               loading={loadingQuery}
+              placeholder="Please select a currency"
+              error={errors.currency && errors?.currency?.message}
             />
           )}
         />
@@ -199,6 +215,7 @@ const AddEditSubscription = ({ subscription, onClose }) => {
               allowEmptyValue
               renderOption={(option) => `${option.type} [${option.number}]`}
               loading={loadingQuery}
+              placeholder="Please select a credit card"
             />
           )}
         />

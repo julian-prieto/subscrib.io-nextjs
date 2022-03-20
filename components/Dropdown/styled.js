@@ -115,3 +115,15 @@ export const Backdrop = styled.div`
   z-index: 30;
   background-color: transparent;
 `;
+
+export const ErrorMessage = styled.div`
+  display: flex;
+  align-items: center;
+
+  color: ${(props) => props.theme.colors.alert};
+  font-weight: 500;
+`;
+
+export const Placeholder = styled.span`
+  opacity: 0.5;
+`;

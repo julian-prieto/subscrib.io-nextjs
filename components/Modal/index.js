@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { IoClose } from "react-icons/io5";
 import { Button } from "ui";
 import {
@@ -22,6 +23,14 @@ const Modal = ({
   type,
   maxWidth,
 }) => {
+  useEffect(() => {
+    if (isOpen) {
+      document.querySelector("body").style = "overflow: hidden;";
+      return;
+    }
+    document.querySelector("body").style = "";
+  }, [isOpen]);
+
   if (!isOpen) {
     return null;
   }
