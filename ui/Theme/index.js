@@ -316,6 +316,7 @@ export const darkTheme = {
 };
 
 export const Container = styled.div`
+  display: ${(props) => (props.hidden ? "none" : "block")};
   margin-left: auto;
   margin-right: auto;
   padding-left: 0.75rem;

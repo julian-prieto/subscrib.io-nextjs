@@ -17,7 +17,7 @@ const refreshTokenSetup = (res) => {
 };
 
 const useAuth = ({ onSuccess, onFailure, onLogoutSuccess } = {}) => {
-  const { user, setUserOnAuthChange, theme } = useContext(AppContext);
+  const { user, userIsLoading, setUserOnAuthChange, theme } = useContext(AppContext);
 
   const handleSuccess = async (res) => {
     const token = res.tokenId;
@@ -72,6 +72,7 @@ const useAuth = ({ onSuccess, onFailure, onLogoutSuccess } = {}) => {
     LoginButton,
     LogoutButton,
     user,
+    userIsLoading,
   };
 };
 

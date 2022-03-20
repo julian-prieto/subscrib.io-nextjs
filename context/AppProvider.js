@@ -1,12 +1,24 @@
 import { useEffect, useState, useReducer } from "react";
-import { useStateWithStorage } from "hooks";
 import { AppContext, appReducer, INITIAL_STATE } from "context";
+import { getUserToken } from "utils";
 
 export const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(appReducer, INITIAL_STATE);
   const [user, setUser] = useState(null);
+  const [userIsLoading, setUserIsLoading] = useState(false);
 
-  const setUserOnAuthChange = (user) => setUser(user);
+  useEffect(() => {
+    const storageToken = getUserToken();
+
+    if (storageToken) {
+      setUserIsLoading(true);
+    }
+  }, []);
+
+  const setUserOnAuthChange = (user) => {
+    setUser(user);
+    setUserIsLoading(false);
+  };
 
   return (
     <AppContext.Provider
@@ -14,6 +26,7 @@ export const AppProvider = ({ children }) => {
         state,
         dispatch,
         user,
+        userIsLoading,
         setUserOnAuthChange,
       }}
     >
