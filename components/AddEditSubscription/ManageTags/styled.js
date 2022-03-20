@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { Button } from "ui";
+import { ButtonContent } from "ui/Button/styled";
 
 export const TagsContainer = styled.div`
   border-radius: 0.25rem;
@@ -45,9 +47,14 @@ export const TagsList = styled.div`
 `;
 
 export const TagOptions = styled.ul`
-  list-style: none;
+  width: 14rem;
+  max-height: 10rem;
   padding: 0 1rem;
+
+  list-style: none;
   font-size: 0.875rem;
+
+  overflow-y: auto;
 
   & > * + * {
     margin-top: 0.25rem;
@@ -57,11 +64,27 @@ export const TagOptions = styled.ul`
 export const TagOptionItem = styled.li`
   display: flex;
   flex-wrap: nowrap;
+
+  padding: 0.25rem 0rem;
 `;
 export const TagOptionItemLabel = styled.label`
+  display: flex;
+  align-items: center;
   cursor: pointer;
 `;
 
 export const TagOptionItemLabelTitle = styled.span`
   margin-left: 0.25rem;
+`;
+
+export const CreateTagButton = styled(Button)`
+  padding: 0.25rem 0.5rem;
+  margin: 0 0.5rem;
+  display: flex;
+  & > ${ButtonContent} {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    justify-content: space-between;
+  }
 `;

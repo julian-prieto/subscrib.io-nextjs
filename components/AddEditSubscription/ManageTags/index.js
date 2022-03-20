@@ -11,13 +11,18 @@ import {
   TagOptionItem,
   TagOptionItemLabel,
   TagOptionItemLabelTitle,
+  CreateTagButton,
 } from "./styled";
 import { Tag, OptionsMenu } from "components";
 import { FaPlus } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import { Checkbox, Input, Button } from "ui";
+import { useEffect, useState, useRef } from "react";
 
 const ManageTags = ({ tags, onChange }) => {
+  const [isCreatingNewTag, setIsCreatingNewTag] = useState(false);
+  const lastRef = useRef();
+
   const { data: dataQuery } = useQuery(GET_SUBSCRIPTION_ASSETS);
   const [createTag, { loading: loadingCreateMutation }] = useMutation(CREATE_TAG);
 
@@ -25,6 +30,7 @@ const ManageTags = ({ tags, onChange }) => {
     register,
     handleSubmit,
     reset,
+    setFocus,
     formState: { errors },
   } = useForm({
     defaultValues: { name: "" },
@@ -66,6 +72,11 @@ const ManageTags = ({ tags, onChange }) => {
           const newTagIds = [...tags.map((t) => t.id), createTag.id];
           onChange(JSON.stringify(newTagIds));
           reset();
+          setIsCreatingNewTag(false);
+          // ...
+          setTimeout(() => {
+            lastRef.current.scrollIntoView(false);
+          }, 50);
         } catch (error) {
           console.log("Error mutating GQL Cache:", error);
         }
@@ -73,6 +84,11 @@ const ManageTags = ({ tags, onChange }) => {
     });
   };
 
+  useEffect(() => {
+    if (isCreatingNewTag) {
+      setFocus("name");
+    }
+  }, [isCreatingNewTag, setFocus]);
   const formHasErrors = !!Object.keys(errors).length;
 
   return (
@@ -103,27 +119,38 @@ const ManageTags = ({ tags, onChange }) => {
                         </TagOptionItem>
                       );
                     })}
+                    <div ref={lastRef} />
                   </TagOptions>
-                  <div style={{ display: "flex", padding: "0 0.5rem", gap: "0.25rem", width: "12rem" }}>
-                    <Input
-                      {...register("name", {
-                        required: { value: true, message: "This field is required" },
-                        minLength: { value: 2, message: "Minimum length: 2" },
-                        maxLength: { value: 20, message: "Maximum length: 20" },
-                      })}
-                      disabled={loadingCreateMutation}
-                    />
+                  {isCreatingNewTag ? (
+                    <>
+                      <div style={{ display: "flex", padding: "0 0.5rem", gap: "0.25rem", flex: 1 }}>
+                        <Input
+                          {...register("name", {
+                            required: { value: true, message: "This field is required" },
+                            minLength: { value: 2, message: "Minimum length: 2" },
+                            maxLength: { value: 20, message: "Maximum length: 20" },
+                          })}
+                          placeholder="e.g. Work"
+                          disabled={loadingCreateMutation}
+                        />
 
-                    <Button
-                      type="submit"
-                      disabled={loadingCreateMutation || formHasErrors}
-                      onClick={handleSubmit(onSubmit)}
-                      xs
-                    >
-                      +
-                    </Button>
-                  </div>
-                  {errors.name && <span>{errors.name.message}</span>}
+                        <Button
+                          type="submit"
+                          disabled={loadingCreateMutation || formHasErrors}
+                          onClick={handleSubmit(onSubmit)}
+                          xs
+                        >
+                          +
+                        </Button>
+                      </div>
+                      {errors.name && <span>{errors.name.message}</span>}
+                    </>
+                  ) : (
+                    <CreateTagButton onClick={() => setIsCreatingNewTag(true)}>
+                      <span>Create Tag</span>
+                      <FaPlus />
+                    </CreateTagButton>
+                  )}
                 </>
               );
             }}
