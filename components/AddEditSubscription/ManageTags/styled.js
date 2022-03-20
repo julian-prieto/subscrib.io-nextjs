@@ -18,6 +18,7 @@ export const TagsHeader = styled.div`
 `;
 
 export const TagsLabel = styled.label`
+  font-size: 0.875rem;
   display: block;
   padding: 0.5rem 0.5rem;
 `;
