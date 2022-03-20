@@ -146,9 +146,11 @@ const ManageTags = ({ tags, onChange }) => {
                       {errors.name && <span>{errors.name.message}</span>}
                     </>
                   ) : (
-                    <CreateTagButton onClick={() => setIsCreatingNewTag(true)}>
-                      <span>Create Tag</span>
-                      <FaPlus />
+                    <CreateTagButton>
+                      <Button onClick={() => setIsCreatingNewTag(true)}>
+                        <span>Create Tag</span>
+                        <FaPlus />
+                      </Button>
                     </CreateTagButton>
                   )}
                 </>

@@ -54,6 +54,10 @@ export const StyledButton = styled.button`
 `;
 
 export const ButtonContent = styled.div`
+  display: flex;
+  align-items: center;
+  flex: 1;
+  justify-content: space-between;
   opacity: ${(props) => (props.isLoading ? "0" : "1")}; ;
 `;
 

@@ -1,6 +1,4 @@
 import styled from "styled-components";
-import { Button } from "ui";
-import { ButtonContent } from "ui/Button/styled";
 
 export const TagsContainer = styled.div`
   border-radius: 0.25rem;
@@ -77,14 +75,10 @@ export const TagOptionItemLabelTitle = styled.span`
   margin-left: 0.25rem;
 `;
 
-export const CreateTagButton = styled(Button)`
-  padding: 0.25rem 0.5rem;
-  margin: 0 0.5rem;
+export const CreateTagButton = styled.div`
   display: flex;
-  & > ${ButtonContent} {
-    display: flex;
-    align-items: center;
+  margin: 0 0.5rem;
+  & > * {
     flex: 1;
-    justify-content: space-between;
   }
 `;
