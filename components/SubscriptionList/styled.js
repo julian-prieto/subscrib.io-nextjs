@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const Header = styled.div`
   display: flex;
@@ -37,16 +37,28 @@ export const AddIcon = styled.div`
   }
 `;
 
-export const Grid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: 1rem;
+export const Subscriptions = styled.div`
+  ${(props) =>
+    props.layout === "GRID" &&
+    css`
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 1rem;
 
-  @media ${(props) => props.theme.devices.md} {
-    grid-template-columns: repeat(auto-fit, 460px);
-  }
+      @media ${(props) => props.theme.devices.md} {
+        grid-template-columns: repeat(auto-fit, 460px);
+      }
 
-  @media ${(props) => props.theme.devices.lg} {
-    grid-template-columns: repeat(auto-fit, 408px);
-  }
+      @media ${(props) => props.theme.devices.lg} {
+        grid-template-columns: repeat(auto-fit, 408px);
+      }
+    `}
+
+  ${(props) =>
+    props.layout === "LIST" &&
+    css`
+      /* padding: 0.5rem 0; */
+      border-radius: 0.25rem;
+      background: ${(props) => props.theme.colors.subscription.card.background};
+    `}
 `;

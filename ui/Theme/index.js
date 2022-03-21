@@ -141,16 +141,18 @@ export const lightTheme = {
     },
 
     // Specific components
-    subscriptionCard: {
-      background: colors.lighter,
-      title: {
-        background: colors.darker,
-        color: colors.lighter,
-      },
-      creditCard: {
-        defaultBackground: colors.secondary,
-        defaultNumberBackground: colors.dark,
-        color: colors.lighter,
+    subscription: {
+      card: {
+        background: colors.lighter,
+        title: {
+          background: colors.darker,
+          color: colors.lighter,
+        },
+        creditCard: {
+          defaultBackground: colors.secondary,
+          defaultNumberBackground: colors.dark,
+          color: colors.lighter,
+        },
       },
     },
     tag: {
@@ -264,16 +266,18 @@ export const darkTheme = {
     },
 
     // Specific components
-    subscriptionCard: {
-      background: colors.darker,
-      title: {
-        background: colors.lighter,
-        color: colors.dark,
-      },
-      creditCard: {
-        defaultBackground: colors.lighter,
-        defaultNumberBackground: colors.dark,
-        color: colors.darker,
+    subscription: {
+      card: {
+        background: colors.darker,
+        title: {
+          background: colors.lighter,
+          color: colors.dark,
+        },
+        creditCard: {
+          defaultBackground: colors.lighter,
+          defaultNumberBackground: colors.dark,
+          color: colors.darker,
+        },
       },
     },
     tag: {

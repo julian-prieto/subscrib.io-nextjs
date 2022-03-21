@@ -4,7 +4,7 @@ import { withOpacity, getContrastColor } from "ui";
 export const Card = styled.div`
   position: relative;
   border-radius: 0.75rem;
-  background: ${(props) => props.theme.colors.subscriptionCard.background};
+  background: ${(props) => props.theme.colors.subscription.card.background};
   box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.1);
 
   transition: box-shadow 0.2s ease-out;
@@ -37,9 +37,9 @@ export const Title = styled.div`
 
   border-radius: 0.25rem;
   border-top-left-radius: 0;
-  background-color: ${(props) => props.theme.colors.subscriptionCard.title.background};
+  background-color: ${(props) => props.theme.colors.subscription.card.title.background};
 
-  color: ${(props) => props.theme.colors.subscriptionCard.title.color};
+  color: ${(props) => props.theme.colors.subscription.card.title.color};
   font-size: 1.5rem;
   font-weight: 700;
 
@@ -51,7 +51,7 @@ export const Title = styled.div`
 
     border-style: solid;
     border-width: 0.5rem 0.5rem 0px 0px;
-    border-color: ${(props) => withOpacity(40, props.theme.colors.subscriptionCard.title.background)}
+    border-color: ${(props) => withOpacity(40, props.theme.colors.subscription.card.title.background)}
       transparent transparent transparent;
 
     transform: translateY(-100%) rotate(180deg);
@@ -66,9 +66,9 @@ export const CreditCard = styled.div`
   color: ${(props) =>
     props.cardColor
       ? getContrastColor(props.cardColor)
-      : props.theme.colors.subscriptionCard.creditCard.color};
+      : props.theme.colors.subscription.card.creditCard.color};
   background-color: ${(props) =>
-    props.cardColor ? props.cardColor : props.theme.colors.subscriptionCard.creditCard.defaultBackground};
+    props.cardColor ? props.cardColor : props.theme.colors.subscription.card.creditCard.defaultBackground};
 `;
 
 export const CreditCardType = styled.div`
@@ -84,7 +84,7 @@ export const CreditCardNumber = styled.div`
       10,
       props.cardColor
         ? getContrastColor(props.cardColor)
-        : props.theme.colors.subscriptionCard.creditCard.defaultNumberBackground
+        : props.theme.colors.subscription.card.creditCard.defaultNumberBackground
     )};
 `;
 
@@ -131,14 +131,5 @@ export const LoadingOverlay = styled.div`
   z-index: 10;
 
   border-radius: 0.75rem;
-  background: ${(props) => props.theme.colors.subscriptionCard.background};
-`;
-
-export const H2 = styled.h2`
-  margin: 0px;
-  margin-bottom: 1rem;
-`;
-
-export const ModalMessage = styled.div`
-  padding-bottom: 1rem;
+  background: ${(props) => props.theme.colors.subscription.card.background};
 `;

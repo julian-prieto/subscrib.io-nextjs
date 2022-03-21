@@ -1,16 +1,19 @@
 import { useState } from "react";
 import { useQuery } from "@apollo/client";
 import { FaPlus } from "react-icons/fa";
+import { BsGrid3X3GapFill, BsListUl } from "react-icons/bs";
 import { GET_SUBSCRIPTIONS } from "graphql/queries";
 import { useAuth, useUserPreferences } from "hooks";
-import { SubscriptionCard, Modal, AddEditSubscription, Dropdown } from "components";
-import { Header, H1, H2, AddIcon, Grid } from "./styled";
+import { Subscription, Modal, AddEditSubscription, Dropdown } from "components";
+import { Header, H1, H2, AddIcon, Subscriptions } from "./styled";
 import { EMPTY_FIELD } from "utils";
+import { Button } from "ui";
 
 const SubscriptionList = () => {
   const { user } = useAuth();
   const { preferredCurrency, setPreferredCurrency } = useUserPreferences();
   const [isCreating, setIsCreating] = useState(false);
+  const [layout, setLayout] = useState("GRID");
 
   const handleChangeCurrency = (value) => {
     if (value === EMPTY_FIELD) {
@@ -42,7 +45,15 @@ const SubscriptionList = () => {
         "Loading Subscriptions..."
       ) : !!dataQuery?.subscriptions?.length ? (
         <>
-          <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: "1rem" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "1rem" }}>
+            <div style={{ display: "flex", gap: "0.25rem" }}>
+              <Button onClick={() => setLayout("GRID")} disabled={layout === "GRID"}>
+                <BsGrid3X3GapFill />
+              </Button>
+              <Button onClick={() => setLayout("LIST")} disabled={layout === "LIST"}>
+                <BsListUl />
+              </Button>
+            </div>
             <Dropdown
               labelSize="4xl"
               label="Display currency"
@@ -54,11 +65,11 @@ const SubscriptionList = () => {
               allowEmptyValue
             />
           </div>
-          <Grid>
+          <Subscriptions layout={layout}>
             {dataQuery?.subscriptions?.map((subscription) => (
-              <SubscriptionCard key={subscription.id} subscription={subscription} />
+              <Subscription key={subscription.id} subscription={subscription} layout={layout} />
             ))}
-          </Grid>
+          </Subscriptions>
         </>
       ) : (
         <div>

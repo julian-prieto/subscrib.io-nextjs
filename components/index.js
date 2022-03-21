@@ -5,7 +5,7 @@ export { default as Modal } from "./Modal";
 export { default as AddEditSubscription } from "./AddEditSubscription";
 export { default as AddEditCreditCard } from "./AddEditCreditCard";
 export { default as AddEditTag } from "./AddEditTag";
-export { default as SubscriptionCard } from "./SubscriptionCard";
+export { default as Subscription } from "./Subscription";
 export { default as SubscriptionList } from "./SubscriptionList";
 export { default as SubscriptionSummary } from "./SubscriptionSummary";
 export { default as Tag } from "./Tag";
