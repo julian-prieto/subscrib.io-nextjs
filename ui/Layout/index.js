@@ -1,5 +1,5 @@
 import { ThemeProvider, createGlobalStyle } from "styled-components";
-import { darkTheme, lightTheme, Container } from "ui";
+import { darkTheme, lightTheme, Container, Spinner } from "ui";
 import { useAuth, useUserPreferences } from "hooks";
 import { Header } from "components";
 
@@ -39,6 +39,11 @@ const Layout = ({ children }) => {
     <ThemeProvider theme={selectedTheme}>
       <GlobalStyle />
       <Header />
+      {userIsLoading && (
+        <Container>
+          <Spinner />
+        </Container>
+      )}
       <Container hidden={userIsLoading}>{children}</Container>
     </ThemeProvider>
   );
