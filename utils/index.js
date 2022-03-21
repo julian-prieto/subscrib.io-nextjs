@@ -20,7 +20,11 @@ export const SUMMARY_VIEWS = {
   UNKNOWN: "UNKNOWN",
 };
 
-export const getUserToken = () => localStorage.getItem("token");
+export const getUserToken = () => {
+  if (typeof window === "undefined") return;
+
+  return localStorage.getItem("token");
+};
 
 export const setUserToken = (token) => localStorage.setItem("token", token);
 

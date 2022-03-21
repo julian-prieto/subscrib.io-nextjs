@@ -16,7 +16,7 @@ const Title = styled.h1`
 
 const Header = () => {
   const { theme, toggleTheme } = useUserPreferences();
-  const { user } = useAuth();
+  const { user, LogoutButton } = useAuth();
 
   return (
     <>
@@ -24,6 +24,7 @@ const Header = () => {
         <Container>
           <Flex justify="space-between" items="center" p={[0.5, 0]}>
             <Title>Subscrib.io</Title>
+            {user && <LogoutButton />}
             <Button color="secondary" onClick={() => toggleTheme()}>
               {theme === "light" ? "🌙" : "🌞"}
             </Button>

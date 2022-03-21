@@ -1,6 +1,6 @@
 import { ThemeProvider, createGlobalStyle } from "styled-components";
-import { darkTheme, lightTheme, Container, Spinner } from "ui";
-import { useAuth, useUserPreferences } from "hooks";
+import { darkTheme, lightTheme, Container } from "ui";
+import { useUserPreferences } from "hooks";
 import { Header } from "components";
 
 const GlobalStyle = createGlobalStyle`
@@ -32,19 +32,13 @@ const GlobalStyle = createGlobalStyle`
 
 const Layout = ({ children }) => {
   const { theme } = useUserPreferences();
-  const { userIsLoading } = useAuth();
   const selectedTheme = theme === "light" ? lightTheme : darkTheme;
 
   return (
     <ThemeProvider theme={selectedTheme}>
       <GlobalStyle />
       <Header />
-      {userIsLoading && (
-        <Container>
-          <Spinner />
-        </Container>
-      )}
-      <Container hidden={userIsLoading}>{children}</Container>
+      <Container>{children}</Container>
     </ThemeProvider>
   );
 };
