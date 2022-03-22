@@ -154,6 +154,10 @@ export const lightTheme = {
           color: colors.lighter,
         },
       },
+      listItem: {
+        hoverBackground: withOpacity(3, colors.darker),
+        border: withOpacity(5, colors.darker),
+      },
     },
     tag: {
       background: withOpacity(10, colors.dark),
@@ -278,6 +282,10 @@ export const darkTheme = {
           defaultNumberBackground: colors.dark,
           color: colors.darker,
         },
+      },
+      listItem: {
+        hoverBackground: withOpacity(3, colors.lighter),
+        border: withOpacity(3, colors.lighter),
       },
     },
     tag: {

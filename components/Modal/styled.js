@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { motion } from "framer-motion";
 
 export const Wrapper = styled.div`
   position: fixed;
@@ -15,7 +16,7 @@ export const Wrapper = styled.div`
   z-index: 30;
 `;
 
-export const Backdrop = styled.div`
+export const Backdrop = styled(motion.div)`
   position: fixed;
   top: 0;
   left: 0;
@@ -26,9 +27,9 @@ export const Backdrop = styled.div`
   background-color: ${(props) => props.theme.colors.modal.backdropBackground};
 `;
 
-export const ModalElement = styled.div`
-  width: ${(props) => (props.isConfirmation ? "calc(100% - 1.5rem)" : "100%")};
-  height: ${(props) => (props.isConfirmation ? "unset" : "100%")};
+export const ModalElement = styled(motion.div)`
+  width: ${(props) => (props.$confirmation ? "calc(100% - 1.5rem)" : "100%")};
+  height: ${(props) => (props.$confirmation ? "unset" : "100%")};
 
   padding: 1rem;
 
@@ -36,7 +37,7 @@ export const ModalElement = styled.div`
     width: unset;
     height: unset;
     min-width: 32rem;
-    max-width: ${(props) => props.maxWidth && props.maxWidth};
+    max-width: ${(props) => props.$maxWidth && props.$maxWidth};
   }
 
   position: relative;

@@ -14,6 +14,7 @@ export const Card = styled.div`
     "tags tags tags tags tags actions";
 
   gap: 1rem;
+  padding: 1rem 0.5rem;
 
   @media ${(props) => props.theme.devices.md} {
     grid-template-columns: repeat(12, 1fr);
@@ -21,15 +22,14 @@ export const Card = styled.div`
     grid-template-areas: "title title title creditcard creditcard tags tags tags price price price actions";
 
     gap: 0;
+    padding: 0.375rem 0.5rem;
   }
-
-  padding: 1rem 0.5rem;
 
   &:hover {
-    background-color: #fff1;
+    background-color: ${(props) => props.theme.colors.subscription.listItem.hoverBackground};
   }
 
-  box-shadow: 0px -1px 0px 0px #fff1 inset;
+  box-shadow: 0px -1px 0px 0px ${(props) => props.theme.colors.subscription.listItem.border} inset;
 
   &:last-of-type {
     box-shadow: none;
@@ -47,7 +47,6 @@ export const Title = styled.div`
 export const CreditCard = styled.div`
   grid-area: creditcard;
   justify-self: start;
-  background-color: green;
 
   @media ${(props) => props.theme.devices.md} {
     justify-self: center;
@@ -128,6 +127,7 @@ export const Actions = styled.div`
   gap: 1rem;
   @media ${(props) => props.theme.devices.md} {
     justify-self: end;
+    padding-right: 0.25rem;
   }
 `;
 
