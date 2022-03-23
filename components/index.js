@@ -11,3 +11,4 @@ export { default as SubscriptionSummary } from "./SubscriptionSummary";
 export { default as Tag } from "./Tag";
 export { default as CreditCard } from "./CreditCard";
 export { default as ColorSelector } from "./ColorSelector";
+export { default as FilterTags } from "./FilterTags";

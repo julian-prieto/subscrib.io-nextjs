@@ -14,7 +14,7 @@ const ERROR_MESSAGES = {
   },
 };
 
-const Tag = ({ tag, allowDestroy, allowEdit, onDelete, isLoading }) => {
+const Tag = ({ tag, allowDestroy, allowEdit, onClick, onDelete, isLoading }) => {
   const [isEditing, setIsEditing] = useState(false);
 
   const [deleteTag, { loading: loadingDeleteMutation }] = useMutation(DELETE_TAG_BY_ID);
@@ -76,7 +76,11 @@ const Tag = ({ tag, allowDestroy, allowEdit, onDelete, isLoading }) => {
   }, [isEditing, setFocus]);
 
   return (
-    <Wrapper managing={allowEdit || allowDestroy}>
+    <Wrapper
+      managing={allowEdit || allowDestroy}
+      hasClickAction={onClick}
+      onClick={() => onClick && onClick(tag)}
+    >
       {isEditing ? (
         <>
           <TagInput

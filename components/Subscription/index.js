@@ -5,6 +5,7 @@ import { Modal, AddEditSubscription } from "components";
 import { H2, ModalMessage } from "./styled";
 import SubscriptionGridItem from "./SubscriptionGridItem";
 import SubscriptionListItem from "./SubscriptionListItem";
+import { useRouter } from "next/router";
 
 const Components = {
   GRID: SubscriptionGridItem,
@@ -13,6 +14,7 @@ const Components = {
 const Subscription = ({ subscription, layout }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const router = useRouter();
 
   const [deleteSubscription, { loading: loadingDeleteMutation }] = useMutation(DELETE_SUBSCRIPTION_BY_ID);
 
@@ -38,6 +40,18 @@ const Subscription = ({ subscription, layout }) => {
       },
     });
     setIsDeleting(false);
+  };
+
+  const handleTagClick = (tag) => {
+    const existingTags = router.query.tags;
+
+    if (existingTags?.includes(tag.id)) {
+      return;
+    }
+
+    const newTags = existingTags ? `${existingTags},${tag.id}` : tag.id;
+    router.query.tags = newTags;
+    router.push(router);
   };
 
   const EDIT_MODAL = {
@@ -69,6 +83,7 @@ const Subscription = ({ subscription, layout }) => {
         loadingDeleteMutation={loadingDeleteMutation}
         onEdit={() => setIsEditing(true)}
         onRemove={() => setIsDeleting(true)}
+        onTagClick={handleTagClick}
       />
       <Modal isOpen={isEditing} onClose={() => setIsEditing(false)} content={EDIT_MODAL} />
       <Modal

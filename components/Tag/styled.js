@@ -14,6 +14,14 @@ export const Wrapper = styled.div`
   color: ${(props) => props.theme.colors.tag.color};
 
   font-size: ${(props) => (props.managing ? "1rem" : "0.75rem")};
+
+  ${(props) =>
+    props.hasClickAction &&
+    css`
+      &:hover {
+        cursor: pointer;
+      }
+    `}
 `;
 
 export const TagName = styled.div`

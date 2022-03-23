@@ -17,34 +17,11 @@ import {
   DeleteIcon,
 } from "./styled";
 
-const SubscriptionListItem = ({ subscription, loadingDeleteMutation, onEdit, onRemove }) => {
+const SubscriptionListItem = ({ subscription, onEdit, onRemove, onTagClick }) => {
   const { title, creditCard, price, priceDisplay, currency, currencyDisplay, frequency, tags } = subscription;
 
   return (
     <Card>
-      {/* <Title>{title}</Title>
-      <CreditCard>
-        {creditCard && (
-          <CreditCardItem cardColor={creditCard.color}>
-            {creditCard.type && <CreditCardType>{getCreditCardType(creditCard.type)}</CreditCardType>}
-            {creditCard.number && (
-              <CreditCardNumber cardColor={creditCard.color}>{creditCard.number}</CreditCardNumber>
-            )}
-          </CreditCardItem>
-        )}
-      </CreditCard>
-      <Tags>
-        {tags.map((tag) => (
-          <Tag key={tag.id} tag={tag} />
-        ))}
-      </Tags>
-      <Price>
-        {priceDisplay || price} [{currencyDisplay || currency}] / {getFrequency(frequency)}
-      </Price>
-      <Actions>
-        <EditIcon onClick={onEdit} />
-        <DeleteIcon onClick={onRemove} />
-      </Actions> */}
       <Title>{title}</Title>
       <CreditCard>
         {creditCard && (
@@ -58,7 +35,7 @@ const SubscriptionListItem = ({ subscription, loadingDeleteMutation, onEdit, onR
       </CreditCard>
       <Tags>
         {tags.map((tag) => (
-          <Tag key={tag.id} tag={tag} />
+          <Tag key={tag.id} tag={tag} onClick={onTagClick} />
         ))}
       </Tags>
       <Price>

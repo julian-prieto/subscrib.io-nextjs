@@ -7,12 +7,11 @@ import { Button, Input } from "ui";
 import { Wrapper, Actions, Form } from "./styled";
 import { EMPTY_FIELD, FREQUENCIES, getDirtyValues } from "utils";
 import { Dropdown } from "components";
-import { useUserPreferences } from "hooks";
+import { useSubscriptions } from "hooks";
 import ManageTags from "./ManageTags";
 
 const AddEditSubscription = ({ subscription, onClose }) => {
-  const { preferredCurrency } = useUserPreferences();
-
+  const { variables: variablesQuery } = useSubscriptions();
   const { data: dataQuery, loading: loadingQuery } = useQuery(GET_SUBSCRIPTION_ASSETS);
   const [
     editSubscription,
@@ -52,7 +51,7 @@ const AddEditSubscription = ({ subscription, onClose }) => {
       frequency: form.frequency,
       creditCardId: form.creditCardId,
       tags: form.tags ? JSON.parse(form.tags) : [],
-      returnCurrency: preferredCurrency,
+      returnCurrency: variablesQuery.convertToCurrency,
     };
 
     if (subscription) {
@@ -92,11 +91,11 @@ const AddEditSubscription = ({ subscription, onClose }) => {
           try {
             const { subscriptions } = cache.readQuery({
               query: GET_SUBSCRIPTIONS,
-              variables: { convertToCurrency: preferredCurrency },
+              variables: variablesQuery,
             });
             cache.writeQuery({
               query: GET_SUBSCRIPTIONS,
-              variables: { convertToCurrency: preferredCurrency },
+              variables: variablesQuery,
               data: {
                 subscriptions: [...subscriptions, createSubscription],
               },
@@ -107,7 +106,7 @@ const AddEditSubscription = ({ subscription, onClose }) => {
               .filter((key) => key.includes("Subscription"))
               .reduce((p, a) => {
                 const [, , currency] = a.split(":");
-                const preferencesCurrency = `${preferredCurrency}`;
+                const preferencesCurrency = `${variablesQuery.convertToCurrency}`;
                 return p.includes(currency) ? p : currency === preferencesCurrency ? p : [...p, currency];
               }, []);
 

@@ -16,7 +16,7 @@ import {
   LoadingOverlay,
 } from "./styled";
 
-const SubscriptionCard = ({ subscription, loadingDeleteMutation, onEdit, onRemove }) => {
+const SubscriptionCard = ({ subscription, loadingDeleteMutation, onEdit, onRemove, onTagClick }) => {
   const { title, creditCard, price, priceDisplay, currency, currencyDisplay, frequency, tags } = subscription;
   const MENU_ITEMS = [
     { label: "Edit", icon: <FaPen />, action: onEdit },
@@ -48,7 +48,7 @@ const SubscriptionCard = ({ subscription, loadingDeleteMutation, onEdit, onRemov
       </Cost>
       <Tags>
         {tags?.map((tag) => (
-          <Tag key={tag.id} tag={tag} />
+          <Tag key={tag.id} tag={tag} onClick={onTagClick} />
         ))}
       </Tags>
     </Card>

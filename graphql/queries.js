@@ -33,8 +33,8 @@ export const GET_ME = gql`
 
 export const GET_SUBSCRIPTIONS = gql`
   ${FRAGMENT_SUBSCRIPTION}
-  query GetSubscriptions($convertToCurrency: String) {
-    subscriptions(convertToCurrency: $convertToCurrency) {
+  query GetSubscriptions($convertToCurrency: String, $tags: [String]) {
+    subscriptions(convertToCurrency: $convertToCurrency, tags: $tags) {
       ...SubscriptionParts
     }
   }

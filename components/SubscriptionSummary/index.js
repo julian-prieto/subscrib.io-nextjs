@@ -1,7 +1,5 @@
-import { useEffect, useMemo, useState } from "react";
-import { useQuery } from "@apollo/client";
-import { GET_SUBSCRIPTIONS } from "graphql/queries";
-import { useAuth, useUserPreferences } from "hooks";
+import { useMemo, useState } from "react";
+import { useUserPreferences, useSubscriptions } from "hooks";
 import {
   EMPTY_FIELD,
   getCreditCardsFromSubscriptionList,
@@ -21,15 +19,11 @@ const SUMMARY_GROUP_BY_OPTIONS = {
 };
 
 const SubscriptionSummary = () => {
-  const { user } = useAuth();
   const { preferredCurrency } = useUserPreferences();
   const [groupedBy, setGroupedBy] = useState();
   const [costFrequency, setCostFrequency] = useState("MONTHLY");
 
-  const { data: dataQuery } = useQuery(GET_SUBSCRIPTIONS, {
-    variables: { convertToCurrency: preferredCurrency },
-    skip: !user,
-  });
+  const { data: dataQuery } = useSubscriptions();
 
   const SUBSCRIPTIONS_DATA = !!dataQuery?.subscriptions?.length;
   const GROUP_BY_DEFINED = groupedBy && groupedBy !== EMPTY_FIELD;
