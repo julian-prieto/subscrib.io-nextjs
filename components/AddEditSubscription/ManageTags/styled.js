@@ -82,3 +82,11 @@ export const CreateTagButton = styled.div`
     flex: 1;
   }
 `;
+
+export const CreateTagAction = styled.div`
+  display: flex;
+  flex: 1;
+  gap: 0.25rem;
+
+  padding: 0 0.5rem;
+`;

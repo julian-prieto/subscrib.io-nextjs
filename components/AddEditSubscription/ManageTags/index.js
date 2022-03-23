@@ -12,6 +12,7 @@ import {
   TagOptionItemLabel,
   TagOptionItemLabelTitle,
   CreateTagButton,
+  CreateTagAction,
 } from "./styled";
 import { Tag, OptionsMenu } from "components";
 import { FaPlus } from "react-icons/fa";
@@ -123,7 +124,7 @@ const ManageTags = ({ tags, onChange }) => {
                   </TagOptions>
                   {isCreatingNewTag ? (
                     <>
-                      <div style={{ display: "flex", padding: "0 0.5rem", gap: "0.25rem", flex: 1 }}>
+                      <CreateTagAction>
                         <Input
                           {...register("name", {
                             required: { value: true, message: "This field is required" },
@@ -142,7 +143,7 @@ const ManageTags = ({ tags, onChange }) => {
                         >
                           +
                         </Button>
-                      </div>
+                      </CreateTagAction>
                       {errors.name && <span>{errors.name.message}</span>}
                     </>
                   ) : (

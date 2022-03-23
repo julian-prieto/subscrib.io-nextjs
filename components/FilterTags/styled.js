@@ -61,3 +61,11 @@ export const Subscriptions = styled.div`
       background: ${(props) => props.theme.colors.subscription.card.background};
     `}
 `;
+
+export const Wrapper = styled.div`
+  display: flex;
+  gap: 0.25rem;
+  margin-bottom: 1rem;
+`;
+
+export const Label = styled.span``;

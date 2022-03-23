@@ -3,6 +3,7 @@ import { useMemo } from "react";
 import { useSubscriptions } from "hooks";
 import { Tag } from "components";
 import { useApolloClient } from "@apollo/client";
+import { Wrapper, Label } from "./styled";
 
 const FilterTags = () => {
   const router = useRouter();
@@ -24,12 +25,12 @@ const FilterTags = () => {
   }, [variablesQuery, client]);
 
   return !!tagsFromQueryParam.length ? (
-    <div style={{ display: "flex", marginBottom: "1rem", gap: "0.25rem" }}>
-      <span>Showing results for tag: </span>
+    <Wrapper>
+      <Label>Showing results for tag: </Label>
       {tagsFromQueryParam.map((tag) => (
         <Tag key={tag.id} tag={tag} onDelete={handleRemoveTagFromQuery} />
       ))}
-    </div>
+    </Wrapper>
   ) : null;
 };
 
