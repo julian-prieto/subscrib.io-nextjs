@@ -185,6 +185,11 @@ export const lightTheme = {
       background: colors.lighter,
       hoverBackground: withOpacity(5, colors.dark),
     },
+    siteMenu: {
+      background: colors.lighter,
+      color: colors.darker,
+      closeHover: colors.light,
+    },
     summary: {
       item: {
         background: colors.light,
@@ -313,6 +318,11 @@ export const darkTheme = {
       backdropBackground: withOpacity(80, colors.darker),
       background: colors.dark,
       hoverBackground: withOpacity(10, colors.darker),
+    },
+    siteMenu: {
+      background: colors.darker,
+      color: colors.lighter,
+      closeHover: colors.dark,
     },
     summary: {
       item: {

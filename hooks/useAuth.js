@@ -4,6 +4,7 @@ import { GoogleLogin, GoogleLogout } from "react-google-login";
 import { GET_ME } from "graphql/queries";
 import { setUserToken, removeUserToken } from "utils";
 import { graphqlClient } from "graphql/client";
+import { useUserPreferences } from "hooks";
 
 const refreshTokenSetup = (res) => {
   let refreshTiming = (res.tokenObj.expires_in || 3600 - 5 * 60) * 1000;
@@ -17,7 +18,8 @@ const refreshTokenSetup = (res) => {
 };
 
 const useAuth = ({ onSuccess, onFailure, onLogoutSuccess } = {}) => {
-  const { user, userIsLoading, setUserOnAuthChange, theme } = useContext(AppContext);
+  const { user, userIsLoading, setUserOnAuthChange } = useContext(AppContext);
+  const { theme } = useUserPreferences();
 
   const handleSuccess = async (res) => {
     const token = res.tokenId;
