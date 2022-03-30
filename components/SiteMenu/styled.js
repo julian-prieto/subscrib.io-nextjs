@@ -48,7 +48,7 @@ export const Menu = styled(motion.aside)`
   align-items: center;
   gap: 1rem;
 
-  padding: 2rem 1rem;
+  padding: 2rem 1rem 8rem;
 
   background-color: ${(props) => props.theme.colors.siteMenu.background};
   color: ${(props) => props.theme.colors.siteMenu.color};
