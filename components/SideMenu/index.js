@@ -40,9 +40,9 @@ const SideMenu = ({ ...props }) => {
           ))}
         </Options>
       </AnimateSharedLayout>
-      <motion.div layout="position">
+      <ThemeSelector layout="position">
         <ThemeSwitch />
-      </motion.div>
+      </ThemeSelector>
     </Wrapper>
   );
 };
@@ -56,7 +56,7 @@ const Wrapper = styled(motion.div)`
   gap: 2rem;
   justify-items: center;
   align-items: center;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: 3rem 1fr 3rem;
   grid-template-rows: 1fr;
 
   padding: 0.25rem 0.5rem;
@@ -119,6 +119,11 @@ const Options = styled.div`
     display: block;
     padding: 1rem 0;
   }
+`;
+
+const ThemeSelector = styled(motion.div)`
+  place-self: "end";
+  align-self: "center";
 `;
 
 export default SideMenu;
