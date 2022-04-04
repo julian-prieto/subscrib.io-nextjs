@@ -43,6 +43,19 @@ const useUserPreferences = () => {
   }, [storageTheme, dispatch]);
 
   /*********************************
+   *  PREFERENCES: THEME           *
+   *********************************/
+  const [menuOpen, setMenuOpen] = useStateWithStorage("menuOpen");
+
+  const toggleMenuOpen = () => {
+    setMenuOpen(!menuOpen);
+  };
+
+  useEffect(() => {
+    dispatch({ type: ACTIONS.CHANGE_MENU_OPEN, payload: menuOpen });
+  }, [menuOpen, dispatch]);
+
+  /*********************************
    *  PREFERENCES: CURRENCY        *
    *********************************/
   const setPreferredCurrency = (currency) => {
@@ -51,9 +64,11 @@ const useUserPreferences = () => {
 
   return {
     theme: userPreferences.theme,
-    preferredCurrency: userPreferences.preferredCurrency,
     toggleTheme,
+    preferredCurrency: userPreferences.preferredCurrency,
     setPreferredCurrency,
+    menuOpen: userPreferences.menuOpen,
+    toggleMenuOpen,
   };
 };
 

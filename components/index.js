@@ -13,4 +13,5 @@ export { default as CreditCard } from "./CreditCard";
 export { default as ColorSelector } from "./ColorSelector";
 export { default as FilterTags } from "./FilterTags";
 export { default as SiteMenu } from "./SiteMenu";
+export { default as SideMenu } from "./SideMenu";
 export { default as ThemeSwitch } from "./ThemeSwitch";

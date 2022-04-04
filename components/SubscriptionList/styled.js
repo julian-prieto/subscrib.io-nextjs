@@ -42,15 +42,11 @@ export const Subscriptions = styled.div`
     props.layout === "GRID" &&
     css`
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(408px, 1fr));
       gap: 1rem;
 
       @media ${(props) => props.theme.devices.md} {
-        grid-template-columns: repeat(auto-fit, 460px);
-      }
-
-      @media ${(props) => props.theme.devices.lg} {
-        grid-template-columns: repeat(auto-fit, 408px);
+        gap: 1.25rem;
       }
     `}
 

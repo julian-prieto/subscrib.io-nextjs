@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import { Flex, Container } from "ui";
 import { SiteMenu } from "components";
+import { motion } from "framer-motion";
 
-const StyledHeader = styled.div`
-  margin-bottom: 2rem;
+const StyledHeader = styled(motion.div)`
   background-color: ${(props) => props.theme.colors.header.background};
   color: ${(props) => props.theme.colors.header.color};
 `;
@@ -13,18 +13,16 @@ const Title = styled.h1`
   font-size: 2rem;
 `;
 
-const Header = () => {
+const Header = (props) => {
   return (
-    <>
-      <StyledHeader>
-        <Container>
-          <Flex justify="space-between" items="center" p={[0.5, 0]}>
-            <Title>Subscrib.io</Title>
-            <SiteMenu />
-          </Flex>
-        </Container>
-      </StyledHeader>
-    </>
+    <StyledHeader {...props} layout>
+      <Container>
+        <Flex justify="space-between" items="center" p={[0.5, 0]}>
+          <Title>Subscrib.io</Title>
+          <SiteMenu />
+        </Flex>
+      </Container>
+    </StyledHeader>
   );
 };
 

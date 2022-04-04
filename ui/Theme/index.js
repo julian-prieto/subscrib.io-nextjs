@@ -70,6 +70,7 @@ export const colors = {
 };
 
 export const lightTheme = {
+  light: true,
   devices,
   colors: {
     ...colors,
@@ -190,6 +191,10 @@ export const lightTheme = {
       color: colors.darker,
       closeHover: colors.light,
     },
+    sideMenu: {
+      background: colors.lighter,
+      activeBackground: colors.light,
+    },
     summary: {
       item: {
         background: colors.light,
@@ -204,6 +209,7 @@ export const lightTheme = {
 };
 
 export const darkTheme = {
+  dark: true,
   devices,
   colors: {
     ...colors,
@@ -212,7 +218,7 @@ export const darkTheme = {
       color: colors.lighter,
     },
     body: {
-      background: "#3D3D3F",
+      background: colors.darker,
       color: colors.lighter,
     },
     divider: "#E2E2E280",
@@ -277,7 +283,7 @@ export const darkTheme = {
     // Specific components
     subscription: {
       card: {
-        background: colors.darker,
+        background: colors.dark,
         title: {
           background: colors.lighter,
           color: colors.dark,
@@ -323,6 +329,10 @@ export const darkTheme = {
       background: colors.darker,
       color: colors.lighter,
       closeHover: colors.dark,
+    },
+    sideMenu: {
+      background: colors.darker,
+      activeBackground: colors.dark,
     },
     summary: {
       item: {
