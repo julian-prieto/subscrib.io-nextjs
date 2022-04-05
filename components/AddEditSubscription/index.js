@@ -51,11 +51,10 @@ const AddEditSubscription = ({ subscription, onClose }) => {
       frequency: form.frequency,
       creditCardId: form.creditCardId,
       tags: form.tags ? JSON.parse(form.tags) : [],
-      returnCurrency: variablesQuery.convertToCurrency,
     };
 
     if (subscription) {
-      const mutationVariables = getDirtyValues(variables, dirtyFields, ["id", "returnCurrency"]);
+      const mutationVariables = getDirtyValues(variables, dirtyFields, ["id"]);
 
       editSubscription({
         variables: mutationVariables,
@@ -154,6 +153,7 @@ const AddEditSubscription = ({ subscription, onClose }) => {
           labelSize="xl"
           placeholder="e.g. 9.99"
           type="number"
+          step=".01"
           {...register("price", {
             required: { value: true, message: "Price is required" },
             minLength: { value: 1, message: "Price length is too short" },

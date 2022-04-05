@@ -1,15 +1,14 @@
 import { useMemo, useState } from "react";
 import { useUserPreferences, useSubscriptions } from "hooks";
-import {
-  EMPTY_FIELD,
-  getCreditCardsFromSubscriptionList,
-  getCreditCardType,
-  groupBy,
-  sumBy,
-  SUMMARY_VIEWS,
-} from "utils";
+import { getCreditCardsFromSubscriptionList, getCreditCardType, groupBy, sumBy } from "utils";
 import { Wrapper, Item, CreditCard, CreditCardType, CreditCardNumber, ItemContent, H1 } from "./styled";
 import { Dropdown } from "components";
+
+const SUMMARY_VIEWS = {
+  DEFAULT: "DEFAULT",
+  PREFERENCES_CURRENCY_SELECTED: "PREFERENCES_CURRENCY_SELECTED",
+  UNKNOWN: "UNKNOWN",
+};
 
 const SUMMARY_GROUP_BY_OPTIONS = {
   BY_CURRENCY: "currency",
@@ -19,107 +18,72 @@ const SUMMARY_GROUP_BY_OPTIONS = {
 };
 
 const SubscriptionSummary = () => {
+  const { data: dataQuery } = useSubscriptions();
   const { preferredCurrency } = useUserPreferences();
-  const [groupedBy, setGroupedBy] = useState();
   const [costFrequency, setCostFrequency] = useState("MONTHLY");
 
-  const { data: dataQuery } = useSubscriptions();
-
   const SUBSCRIPTIONS_DATA = !!dataQuery?.subscriptions?.length;
-  const GROUP_BY_DEFINED = groupedBy && groupedBy !== EMPTY_FIELD;
-  const PREFERRED_CURRENCY_DEFINED = !!preferredCurrency;
 
   const summary = useMemo(() => {
-    if (!SUBSCRIPTIONS_DATA) return { view: SUMMARY_VIEWS.UNKNOWN, data: null };
+    if (!SUBSCRIPTIONS_DATA) return null;
 
-    if (!GROUP_BY_DEFINED && PREFERRED_CURRENCY_DEFINED) {
-      const groupByCreditCard = groupBy(
-        groupBy(dataQuery.subscriptions, SUMMARY_GROUP_BY_OPTIONS.BY_CREDIT_CARD),
-        SUMMARY_GROUP_BY_OPTIONS.BY_PREFERENCES_CURRENCY
-      );
-      const costByGroup = sumBy(groupByCreditCard, costFrequency, "priceDisplay");
+    const groupByCreditCard = groupBy(dataQuery.subscriptions, SUMMARY_GROUP_BY_OPTIONS.BY_CREDIT_CARD);
+    const costBByCreditCard = sumBy(groupByCreditCard, costFrequency, preferredCurrency);
 
-      return {
-        view: SUMMARY_VIEWS.PREFERENCES_CURRENCY_SELECTED,
-        creditCardMap: getCreditCardsFromSubscriptionList(dataQuery.subscriptions),
-        data: costByGroup,
-        subs: dataQuery.subscriptions.map((s) => ({
-          currency: s.currency,
-          price: s.price,
-          currencyDisplay: s.currencyDisplay,
-          priceDisplay: s.priceDisplay,
-        })),
-      };
-    }
+    return {
+      view: SUMMARY_VIEWS.DEFAULT,
+      creditCardMap: getCreditCardsFromSubscriptionList(dataQuery.subscriptions),
+      data: costBByCreditCard,
+    };
+  }, [dataQuery, SUBSCRIPTIONS_DATA, preferredCurrency, costFrequency]);
 
-    if (!GROUP_BY_DEFINED) {
-      const groupByCreditCardAndCurrency = groupBy(
-        groupBy(dataQuery.subscriptions, SUMMARY_GROUP_BY_OPTIONS.BY_CREDIT_CARD),
-        SUMMARY_GROUP_BY_OPTIONS.BY_CURRENCY
-      );
-      const costByGroup = sumBy(groupByCreditCardAndCurrency, costFrequency);
+  console.log("summary:", summary);
 
-      return {
-        view: SUMMARY_VIEWS.DEFAULT,
-        creditCardMap: getCreditCardsFromSubscriptionList(dataQuery.subscriptions),
-        data: costByGroup,
-      };
-    }
-
-    const groupByCreditCard = groupBy(dataQuery.subscriptions, SUMMARY_GROUP_BY_OPTIONS[groupedBy]);
-    const costByGroup = sumBy(groupByCreditCard, costFrequency);
-
-    return { view: SUMMARY_VIEWS.UNKNOWN, data: costByGroup };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dataQuery, groupedBy, costFrequency]);
+  if (!summary) {
+    return null;
+  }
 
   return (
-    summary.view !== SUMMARY_VIEWS.UNKNOWN && (
-      <Wrapper>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            marginBottom: "1rem",
-          }}
-        >
-          <H1>Summary</H1>
-          <Dropdown
-            labelSize="4xl"
-            options={["DAILY", "MONTHLY", "YEARLY"]}
-            value={costFrequency}
-            onChange={(v) => setCostFrequency(v)}
-            renderOption={(option) => option}
-          />
-        </div>
-        {Object.entries(summary.data)
-          .sort((a) => (a[0] === "NO_CREDITCARD" ? 1 : -1))
-          .map(([key, value]) => {
-            const creditCard = summary.creditCardMap[key];
+    <Wrapper>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginBottom: "1rem",
+        }}
+      >
+        <H1>Summary</H1>
+        <Dropdown
+          labelSize="4xl"
+          options={["DAILY", "MONTHLY", "YEARLY"]}
+          value={costFrequency}
+          onChange={(v) => setCostFrequency(v)}
+          renderOption={(option) => option}
+        />
+      </div>
+      {Object.entries(summary.data)
+        .sort((a) => (a[0] === "NO_CREDITCARD" ? 1 : -1))
+        .map(([cc, cost]) => {
+          const creditCard = summary.creditCardMap[cc];
 
-            return (
-              <Item key={key}>
-                <CreditCard cardColor={creditCard?.color}>
-                  <CreditCardType>
-                    {creditCard?.type ? getCreditCardType(creditCard.type) : "NO CARD"}
-                  </CreditCardType>
-                  {creditCard?.number && (
-                    <CreditCardNumber cardColor={creditCard.color}>{creditCard.number}</CreditCardNumber>
-                  )}
-                </CreditCard>
-                <ItemContent>
-                  {Object.entries(value).map(([currency, cost]) => (
-                    <div key={currency}>
-                      {currency} {cost}
-                    </div>
-                  ))}
-                </ItemContent>
-              </Item>
-            );
-          })}
-      </Wrapper>
-    )
+          return (
+            <Item key={cc}>
+              <CreditCard cardColor={creditCard?.color}>
+                <CreditCardType>
+                  {creditCard?.type ? getCreditCardType(creditCard.type) : "NO CARD"}
+                </CreditCardType>
+                {creditCard?.number && (
+                  <CreditCardNumber cardColor={creditCard.color}>{creditCard.number}</CreditCardNumber>
+                )}
+              </CreditCard>
+              <ItemContent>
+                {cost.value} {cost.currency}
+              </ItemContent>
+            </Item>
+          );
+        })}
+    </Wrapper>
   );
 };
 

@@ -1,6 +1,6 @@
-// import { FaTrash, FaPen } from "react-icons/fa";
+import { useUserPreferences } from "hooks";
 import { Tag } from "components";
-import { getCreditCardType, getFrequency } from "utils";
+import { getCreditCardType, getFrequency, getCostByPreference } from "utils";
 import {
   Card,
   Title,
@@ -18,7 +18,10 @@ import {
 } from "./styled";
 
 const SubscriptionListItem = ({ subscription, onEdit, onRemove, onTagClick }) => {
-  const { title, creditCard, price, priceDisplay, currency, currencyDisplay, frequency, tags } = subscription;
+  const { preferredCurrency } = useUserPreferences();
+  const { title, creditCard, frequency, tags, cost } = subscription;
+
+  const costObj = getCostByPreference(cost, preferredCurrency);
 
   return (
     <Card>
@@ -40,7 +43,7 @@ const SubscriptionListItem = ({ subscription, onEdit, onRemove, onTagClick }) =>
       </Tags>
       <Price>
         <PriceValue>
-          {priceDisplay || price} {currencyDisplay || currency}
+          {costObj.value} {costObj.currency}
         </PriceValue>
         <PriceFrequency>/ {getFrequency(frequency)}</PriceFrequency>
       </Price>

@@ -1,12 +1,11 @@
 import { useRouter } from "next/router";
 import { useQuery } from "@apollo/client";
 import { GET_SUBSCRIPTIONS } from "graphql/queries";
-import { useAuth, useUserPreferences } from "hooks";
+import { useAuth } from "hooks";
 
 const useSubscriptions = () => {
   const router = useRouter();
   const { user } = useAuth();
-  const { preferredCurrency } = useUserPreferences();
 
   const { tags } = router.query;
 

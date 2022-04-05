@@ -14,12 +14,6 @@ const CARD_TYPES = {
 
 export const EMPTY_FIELD = "----------";
 
-export const SUMMARY_VIEWS = {
-  DEFAULT: "DEFAULT",
-  PREFERENCES_CURRENCY_SELECTED: "PREFERENCES_CURRENCY_SELECTED",
-  UNKNOWN: "UNKNOWN",
-};
-
 export const getUserToken = () => {
   if (typeof window === "undefined") return;
 
@@ -83,39 +77,54 @@ export const groupBy = (items, field) => {
   return _groupBy(items, field);
 };
 
-export const getCostByFrequency = (subscription, priceField, frequency) => {
+export const getCostByPreference = (cost, preferredCurrency) => {
+  if (!cost || !preferredCurrency) {
+    return {};
+  }
+
+  const { currency, value } = cost.find((c) => c.currency === preferredCurrency);
+
+  return {
+    currency,
+    value,
+  };
+};
+
+export const getCostByFrequency = (subscription, preferredCurrency, frequency) => {
+  const cost = getCostByPreference(subscription.cost, preferredCurrency);
+
   switch (subscription.frequency) {
     case "YEARLY":
       return frequency === "YEARLY"
-        ? subscription[priceField]
+        ? cost.value
         : frequency === "MONTHLY"
-        ? subscription[priceField] / 12
-        : subscription[priceField] / 365;
+        ? cost.value / 12
+        : cost.value / 365;
     case "MONTHLY":
       return frequency === "YEARLY"
-        ? subscription[priceField] * 12
+        ? cost.value * 12
         : frequency === "MONTHLY"
-        ? subscription[priceField]
-        : subscription[priceField] / 30;
+        ? cost.value
+        : cost.value / 30;
     case "DAILY":
       return frequency === "YEARLY"
-        ? subscription[priceField] * 365
+        ? cost.value * 365
         : frequency === "MONTHLY"
-        ? subscription[priceField] * 30
-        : subscription[priceField];
+        ? cost.value * 30
+        : cost.value;
     default:
-      return subscription[priceField];
+      return cost.value;
   }
 };
 
-export const sumBy = (objects, costFrequency, priceField = "price") => {
+export const sumBy = (objects, costFrequency, preferredCurrency = "USD") => {
   if (Array.isArray(objects))
-    return round(_sumBy(objects, (p) => getCostByFrequency(p, priceField, costFrequency)));
+    return round(_sumBy(objects, (p) => getCostByFrequency(p, preferredCurrency, costFrequency)));
 
   return Object.entries(objects).reduce((prev, [currGroup, currValue]) => {
     return {
       ...prev,
-      [currGroup]: sumBy(currValue, costFrequency, priceField),
+      [currGroup]: { currency: preferredCurrency, value: sumBy(currValue, costFrequency, preferredCurrency) },
     };
   }, {});
 };
