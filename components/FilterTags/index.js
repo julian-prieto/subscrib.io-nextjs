@@ -11,8 +11,12 @@ const FilterTags = () => {
   const { variables: variablesQuery } = useSubscriptions();
 
   const handleRemoveTagFromQuery = (tag) => {
-    const listOfTags = router.query.tags.split(",").filter((id) => id !== tag.id);
-    router.query.tags = listOfTags;
+    const listOfTags = router.query.tags
+      .split(",")
+      .filter((id) => id !== tag.id)
+      .join(",");
+    router.query.tags = listOfTags ? listOfTags : [];
+
     router.push(router);
   };
 

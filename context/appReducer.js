@@ -2,7 +2,7 @@ export const INITIAL_STATE = {
   userPreferences: {
     theme: "light",
     menuOpen: true,
-    preferredCurrency: null,
+    preferredCurrency: "USD",
   },
 };
 

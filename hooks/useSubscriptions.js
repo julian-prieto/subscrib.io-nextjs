@@ -12,7 +12,6 @@ const useSubscriptions = () => {
 
   const { data, loading, error, variables } = useQuery(GET_SUBSCRIPTIONS, {
     variables: {
-      convertToCurrency: preferredCurrency,
       tags: tags && tags.split(","),
     },
     skip: !user,

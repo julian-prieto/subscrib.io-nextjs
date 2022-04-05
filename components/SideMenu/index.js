@@ -1,16 +1,51 @@
 import styled, { css } from "styled-components";
 import { motion, AnimateSharedLayout } from "framer-motion";
 import { BsCreditCard2BackFill } from "react-icons/bs";
-import { AiFillHome, AiFillTags } from "react-icons/ai";
+import { AiFillHome } from "react-icons/ai";
+import { FaTags } from "react-icons/fa";
 import { useUserPreferences } from "hooks";
-import { colors } from "ui";
 import ThemeSwitch from "../ThemeSwitch";
 import OptionItem from "./OptionItem";
+import { HiChevronDoubleRight, HiChevronDoubleLeft } from "react-icons/hi";
+{
+  /* <ToggleButton onClick={() => toggleMenuOpen()} layout>
+          {menuOpen ? <HiChevronDoubleLeft /> : <HiChevronDoubleRight />}
+        </ToggleButton> */
+}
+const ToggleButton = styled(motion.button)`
+  display: none;
 
+  @media ${(props) => props.theme.devices.md} {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 0.75rem 1rem;
+
+    width: 100%;
+
+    font-size: 1rem;
+
+    background-color: ${(props) => (props.theme.dark ? props.theme.colors.dark : props.theme.colors.light)};
+    color: ${(props) => (props.theme.dark ? props.theme.colors.lighter : props.theme.colors.darker)};
+    border-radius: 0.5rem;
+    border: none;
+
+    transition: background-color 0.2s ease-out, color 0.4s ease-out;
+
+    &:hover {
+      background-color: ${(props) =>
+        props.theme.dark ? props.theme.colors.lighter : props.theme.colors.darker};
+      color: ${(props) => (props.theme.dark ? props.theme.colors.darker : props.theme.colors.lighter)};
+
+      cursor: pointer;
+    }
+  }
+`;
 const OPTION_ITEMS = [
   { label: "Home", route: "/", icon: <AiFillHome /> },
   { label: "Credit Cards", route: "/credit-cards", icon: <BsCreditCard2BackFill /> },
-  { label: "Tags", route: "/tags", icon: <AiFillTags /> },
+  { label: "Tags", route: "/tags", icon: <FaTags /> },
 ];
 
 const SideMenu = ({ ...props }) => {
@@ -18,21 +53,9 @@ const SideMenu = ({ ...props }) => {
 
   return (
     <Wrapper {...props} layout>
-      <Logo
-        onClick={() => toggleMenuOpen()}
-        layout="position"
-        $isOpen={menuOpen}
-        whileHover={{
-          backgroundColor: [colors.option, colors.alert, colors.warning, colors.success, colors.option],
-          transition: {
-            loop: Infinity,
-            duration: 4,
-          },
-        }}
-        whileTap={{ scale: 0.9 }}
-      >
-        S
-      </Logo>
+      <LogoContainer layout="position" $isOpen={menuOpen} whileTap={{ scale: 0.9 }}>
+        <Logo>S</Logo>
+      </LogoContainer>
       <AnimateSharedLayout>
         <Options>
           {OPTION_ITEMS.map((item) => (
@@ -43,6 +66,9 @@ const SideMenu = ({ ...props }) => {
       <ThemeSelector layout="position">
         <ThemeSwitch />
       </ThemeSelector>
+      <ToggleButton onClick={() => toggleMenuOpen()} layout="position">
+        {menuOpen ? <HiChevronDoubleLeft /> : <HiChevronDoubleRight />}
+      </ToggleButton>
     </Wrapper>
   );
 };
@@ -93,8 +119,8 @@ const Wrapper = styled(motion.div)`
         `}
 `;
 
-const Logo = styled(motion.div)`
-  background-color: ${(props) => props.theme.colors.option};
+const LogoContainer = styled(motion.div)`
+  background-color: ${(props) => (props.theme.dark ? props.theme.colors.dark : props.theme.colors.light)};
   width: 3rem;
   height: 3rem;
 
@@ -104,10 +130,19 @@ const Logo = styled(motion.div)`
   justify-content: center;
   align-items: center;
 
-  font-size: 2rem;
-  font-weight: bold;
-
   user-select: none;
+`;
+
+const Logo = styled(motion.div)`
+  font-size: 2rem;
+  font-weight: 900;
+
+  background: #f33cc2;
+  background: -webkit-linear-gradient(to bottom, #f33cc2 25%, #9a4fdd 100%);
+  background: -moz-linear-gradient(to bottom, #f33cc2 25%, #9a4fdd 100%);
+  background: linear-gradient(to bottom, #f33cc2 25%, #9a4fdd 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 `;
 
 const Options = styled.div`
