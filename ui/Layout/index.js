@@ -8,21 +8,28 @@ const GlobalStyle = createGlobalStyle`
   html {
     margin: 0;
     padding: 0;
-    height: 100%;
+    @media ${(props) => props.theme.devices.md} {
+      height: 100%;
+    }
   }
 
   body {
     margin: 0;
     padding: 0;
-    height: 100%;
-    max-height: 100%;
-    width: 100%;
+    @media ${(props) => props.theme.devices.md} {
+      height: 100%;
+      max-height: 100%;
+      width: 100%;
+      & > #__next {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+      }
+    }
 
 
     & > #__next {
-      display: flex;
-      flex-direction: column;
-      height: 100%;
+      min-height: 100vh;
     }
   }
 
@@ -50,7 +57,6 @@ const Layout = ({ children }) => {
     <ThemeProvider theme={selectedTheme}>
       <GlobalStyle />
       <StyledLayout>
-        {/* <StyledHeader /> */}
         <StyledMenu />
         <StyledContent layout="position">{children}</StyledContent>
       </StyledLayout>
@@ -86,6 +92,10 @@ export const StyledHeader = styled(Header)`
 `;
 export const StyledMenu = styled(SideMenu)`
   grid-area: menu;
+  /* position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%; */
 `;
 export const StyledContent = styled(motion.div)`
   grid-area: content;
@@ -95,11 +105,10 @@ export const StyledContent = styled(motion.div)`
 
   width: 100%;
 
-  @media ${(props) => props.theme.devices.sm} {
+  @media ${(props) => props.theme.devices.md} {
     padding: 2rem;
+    overflow-y: auto;
   }
-
-  overflow-y: auto;
 `;
 
 export default Layout;
