@@ -398,6 +398,7 @@ export const Svg = styled(Icon)`
 `;
 
 export const Card = styled.div`
+  padding: 1rem;
   border-radius: 0.25rem;
   background-color: ${(props) => props.theme.colors.card.background};
   color: ${(props) => props.theme.colors.card.color};

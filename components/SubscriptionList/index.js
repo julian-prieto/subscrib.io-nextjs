@@ -3,7 +3,7 @@ import { FaPlus } from "react-icons/fa";
 import { BsGrid3X3GapFill, BsListUl } from "react-icons/bs";
 import { useUserPreferences, useSubscriptions } from "hooks";
 import { Subscription, Modal, AddEditSubscription, Dropdown, FilterTags } from "components";
-import { Header, H1, H2, AddIcon, Subscriptions } from "./styled";
+import { Wrapper, Header, H1, H2, AddIcon, Subscriptions } from "./styled";
 import { EMPTY_FIELD } from "utils";
 import { Button } from "ui";
 
@@ -28,7 +28,7 @@ const SubscriptionList = () => {
   };
 
   return (
-    <>
+    <Wrapper>
       <Header>
         <H1>Subscriptions</H1>
         <AddIcon onClick={() => setIsCreating(true)}>
@@ -47,7 +47,7 @@ const SubscriptionList = () => {
         <Dropdown
           labelSize="4xl"
           label="Display currency"
-          options={["USD", "EUR", "ARS"]}
+          options={["USD", "EUR", "GBP", "ARS"]}
           value={preferredCurrency}
           onChange={handleChangeCurrency}
           renderOption={(option) => option}
@@ -73,7 +73,7 @@ const SubscriptionList = () => {
         onClose={() => setIsCreating(false)}
         content={CREATE_MODAL}
       />
-    </>
+    </Wrapper>
   );
 };
 

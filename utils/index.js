@@ -1,5 +1,12 @@
 import { groupBy as _groupBy, sumBy as _sumBy } from "lodash";
 
+export const CURRENCY_SIGNS = {
+  ARS: "$",
+  USD: "$",
+  EUR: "€",
+  GBP: "£",
+};
+
 export const FREQUENCIES = {
   DAILY: "day",
   MONTHLY: "month",
@@ -93,28 +100,27 @@ export const getCostByPreference = (cost, preferredCurrency) => {
 export const getCostByFrequency = (subscription, preferredCurrency, frequency) => {
   const cost = getCostByPreference(subscription.cost, preferredCurrency);
 
+  let value = 0;
+
   switch (subscription.frequency) {
     case "YEARLY":
-      return frequency === "YEARLY"
-        ? cost.value
-        : frequency === "MONTHLY"
-        ? cost.value / 12
-        : cost.value / 365;
+      value =
+        frequency === "YEARLY" ? cost.value : frequency === "MONTHLY" ? cost.value / 12 : cost.value / 365;
+      break;
     case "MONTHLY":
-      return frequency === "YEARLY"
-        ? cost.value * 12
-        : frequency === "MONTHLY"
-        ? cost.value
-        : cost.value / 30;
+      value =
+        frequency === "YEARLY" ? cost.value * 12 : frequency === "MONTHLY" ? cost.value : cost.value / 30;
+      break;
     case "DAILY":
-      return frequency === "YEARLY"
-        ? cost.value * 365
-        : frequency === "MONTHLY"
-        ? cost.value * 30
-        : cost.value;
+      value =
+        frequency === "YEARLY" ? cost.value * 365 : frequency === "MONTHLY" ? cost.value * 30 : cost.value;
+      break;
     default:
-      return cost.value;
+      value = cost.value;
+      break;
   }
+
+  return round(value);
 };
 
 export const sumBy = (objects, costFrequency, preferredCurrency = "USD") => {

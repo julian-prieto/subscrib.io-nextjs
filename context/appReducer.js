@@ -1,6 +1,6 @@
 export const INITIAL_STATE = {
   userPreferences: {
-    theme: "light",
+    theme: null,
     menuOpen: true,
     preferredCurrency: "USD",
   },

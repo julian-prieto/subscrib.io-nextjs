@@ -1,6 +1,7 @@
 import Head from "next/head";
 import { SubscriptionList, SubscriptionSummary } from "components";
 import { useAuth } from "hooks";
+import styled from "styled-components";
 
 const Subscrib = () => {
   const { LoginButton, user } = useAuth();
@@ -13,10 +14,10 @@ const Subscrib = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       {user ? (
-        <>
-          <SubscriptionList />
+        <Wrapper>
           <SubscriptionSummary />
-        </>
+          <SubscriptionList />
+        </Wrapper>
       ) : (
         <div style={{ display: "flex", gap: "2rem", flexDirection: "column", alignItems: "center" }}>
           <div>Login to see your dashboard</div>
@@ -26,5 +27,10 @@ const Subscrib = () => {
     </>
   );
 };
+
+const Wrapper = styled.div`
+  display: grid;
+  gap: 4rem;
+`;
 
 export default Subscrib;
